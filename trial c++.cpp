@@ -25,6 +25,31 @@ struct Product {
 	string batch;
 };
 
+void addproduct()
+{
+
+}
+
+void updateproduct()
+{
+
+}
+
+void checkproduct()
+{
+
+}
+
+void forecast()
+{
+
+}
+
+void reminder()
+{
+
+}
+
 int main()
 {
   int choice;
@@ -32,23 +57,23 @@ int main()
 
   while (choice != 6)
   {
+	  reminder();
 	  if (choice == 1)
 	  {
-
+		  addproduct();
 	  }
 	  if (choice == 2)
 	  {
-
+		  updateproduct();
 	  }
 	  if (choice == 3)
 	  {
-
+		  checkproduct();
+	  }
+	  if (choice == 4)
+	  {
+		  forecast();
 	  }
   }
  }
 
-
-// updated message 23321321321
-// new shittttttt
-//Hellloooooooooo bitches
-//82 bitchesssssssssss
