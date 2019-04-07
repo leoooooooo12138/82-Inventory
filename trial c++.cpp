@@ -2,7 +2,7 @@
 using namespace std;
 
 
-int menu() {
+int menu() { // Taha
   int choice;
   cout << "*************************************************" << endl;
   cout << "***Leo & Taha's 82 Inventory Management System***" << endl;
@@ -17,7 +17,7 @@ int menu() {
   cin >> choice;
   return choice;
 }
-struct Product {
+struct Product { // Taha
 	string name;
 	string type;
 	int price;
@@ -26,7 +26,7 @@ struct Product {
 	string batch;
 };
 
-void addproduct( Product arrayofgoods[],int &number)
+void addproduct( Product arrayofgoods[],int &number) // Leo
 {
 	cout << "Please enter the product name: " << endl;
 	cin >> Product.name >> endl;
@@ -46,7 +46,7 @@ void addproduct( Product arrayofgoods[],int &number)
 
 }
 
-void updateproduct(Product goodsarray[], int size, string updateproduct, string lot)
+void updateproduct(Product goodsarray[], int size, string updateproduct, string lot) // Taha
 {
 	//need to locate product first
 	int loc;
@@ -72,22 +72,22 @@ void updateproduct(Product goodsarray[], int size, string updateproduct, string 
 	cout << "Product Updated Successfully! ^_^ " << endl;
 }
 
-void checkproduct()
+void checkproduct() // Leo
 {
 
 }
 
-void forecast()
+void forecast() // Leo
 {
 
 }
 
-void reminder()
+void reminder() // Taha
 {
 
 }
 
-void inventory_worth( Product arrayofgoods[], int &number) 
+void inventory_worth( Product arrayofgoods[], int &number) // Leo
 {
 	string productname;
 	cout << "Which product's inventory worth would you like to know? (If you want to know how much is everything worth in the warehouse just to feel like a BOSS, type EVERYTHING)" << endl;
@@ -113,7 +113,7 @@ void inventory_worth( Product arrayofgoods[], int &number)
 
 }
 
-array load_array()
+array load_array() // Taha
 {
 
 }
