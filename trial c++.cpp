@@ -16,6 +16,14 @@ int menu() {
   cin >> choice;
   return choice;
 }
+struct Product {
+	string name;
+	string type;
+	int price;
+	int quantity;
+	int days_left;
+	string batch;
+};
 
 int main()
 {
