@@ -46,9 +46,30 @@ void addproduct( Product arrayofgoods[],int &number)
 
 }
 
-void updateproduct()
+void updateproduct(Product goodsarray[], int size, string updateproduct, string lot)
 {
-
+	//need to locate product first
+	int loc;
+	for(int i = 0; i < size; i++) {
+		if(goodsarray[i].name == updateproduct && goodsarray[i].batch == lot) {
+			loc = i;
+			break;
+		}
+		else if(i + 1 == num) {  //incase we reach last iteration and product still not found
+			cout <<"Sorry, The Product you are looking for does not exist in the database." << endl;
+			return;
+		}
+	}
+	
+	//updating the product 
+	cout << "Enter the new Price: ";
+	cin >> goodsarray[loc].price << endl;
+	cout << "Enter the updated quantity: ";
+	cin >> goodsarray[loc].quantity << endl;
+	cout << "Enter the new Expiry date: ";
+	cin >> goodsarray[loc].expiry << endl;
+	
+	cout << "Product Updated Successfully! ^_^ " << endl;
 }
 
 void checkproduct()
@@ -66,7 +87,7 @@ void reminder()
 
 }
 
-void inventoryworth( Product arrayofgoods[], int &number)
+void inventory_worth( Product arrayofgoods[], int &number) 
 {
 	string productname;
 	cout << "Which product's inventory worth would you like to know? (If you want to know how much is everything worth in the warehouse just to feel like a BOSS, type EVERYTHING)" << endl;
@@ -97,35 +118,46 @@ array load_array()
 
 }
 
-int main()
-{
+int main() {
   int choice;
   choice = menu();
   load_array();
-
-  while (choice != 6)
-  {
-	  reminder();
-	  if (choice == 1)
-	  {
-		  addproduct(arrayofgoods,number);
-	  }
-	  if (choice == 2)
-	  {
-		  updateproduct();
-	  }
-	  if (choice == 3)
-	  {
-		  checkproduct();
-	  }
-	  if (choice == 4)
-	  {
-		  forecast();
-	  }
-	  if (choice == 5)
-	  {
-		  inventoryworth();
-	  }
+  while (choice != 6) {
+	reminder();
+	cin >> choice << endl;
+	switch(choice) {
+	  case 1:
+		addproduct();
+		break;
+  
+	  case 2:
+		string update, batch;
+		cout << "Which product do you want to update?";
+		cin >> update << endl;
+		cout << "Enter the batch number for this product: ";
+		cin >> batch << endl;
+		updateproduct(productarray, size, update, batch);
+		break;
+		  
+	  case 3:
+		checkproduct();
+		break;
+		  
+	  case 4:
+	    forecast();
+		break;
+		
+	  case 5:
+	    inventory_worth();
+		break;
+		
+	  case 6:
+		cout << "Thank you for using LT Management System\n Have a nice day! :)" << endl;
+		break;
+		
+	  default:
+		cout << "Please choose a number between 1-6!"
+    }
   }
- }
+}
 
