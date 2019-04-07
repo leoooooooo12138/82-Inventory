@@ -12,15 +12,31 @@ int menu() {
   cout << "2. Update Existing Product" << endl;
   cout << "2. Update Existing Product" << endl;
   cout << "3. Check Inventory" << endl;
-
+  cout << "6. Quit" << endl;
   cin >> choice;
   return choice;
 }
 
 int main()
 {
-  cout << "Hello World" << endl;
-  return 0;
+  int choice;
+  choice = menu();
+
+  while (choice != 6)
+  {
+	  if (choice == 1)
+	  {
+
+	  }
+	  if (choice == 2)
+	  {
+
+	  }
+	  if (choice == 3)
+	  {
+
+	  }
+  }
  }
 
 
