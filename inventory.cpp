@@ -15,8 +15,8 @@ int menu() { // Taha
   cout << "*******    Choose an option from below    *******" << endl;
   cout << "*1. Add a new product                           *" << endl;
   cout << "*2. Update Existing Product                     *" << endl;
-  cout << "*3. Check A Product                             *" << endl;
-  cout << "*4. Catastrophic event                          *" << endl;
+  cout << "*3. View Products                               *" << endl;
+  cout << "*4. Check Inventory in event of Natural Disaster*" << endl;
   cout << "*5. Inventory worth                             *" << endl;
   cout << "*6. Quit                                        *" << endl;
   cout << "*************************************************" << endl;
@@ -33,7 +33,10 @@ struct Product { // Taha
 	string batch;
 };
 /*
-void addproduct( Product arrayofgoods[],int &number) // Leo
+//this function will etiher return an integer (or update by reference) that keeps track of how many items there are in total in the function. Please incorporate a counter var in the function to keep track of how many products
+//there are in the array. i need this info.
+//i have added the number in the header
+int addproduct( Product arrayofgoods[],int &number, int num_products) // Leo
 {
 	cout << "Please enter the product name: " << endl;
 	cin >> Product.name >> endl;
@@ -143,7 +146,7 @@ Product* increase_size(Product *&current, int &len) {  //Taha
 }
 
 //function to load data from database using file input
-void load_array(Product *array, int sizeofarray) // Taha
+void load_array(Product *array, int sizeofarray, int &num_products) // Taha
 {
 	cout << "Please wait a moment while the program is loading ";
 	int repeat = 0;
@@ -168,11 +171,12 @@ void load_array(Product *array, int sizeofarray) // Taha
 		cout << "." << endl;
 		repeat++;
 	}
-	cout << "Database loaded successfully!" << endl << endl;
+	
 	while(getline(fin, lineofdata)) {  //read in each line which contains product info and make a stream to feed these values into array
 	    if(idx == sizeofarray) {  //incase our product number reaches max size of the array, then increase the size of array
 	    	increase_size(array, sizeofarray);
 	    }
+	    ss.clear();  //to clear the stream
 	    ss.str(lineofdata);
 		ss >> array[idx].name;
 		ss >> array[idx].type;
@@ -181,14 +185,35 @@ void load_array(Product *array, int sizeofarray) // Taha
 		ss >> array[idx].days_left;
 		ss >> array[idx].batch;
 		idx++;
+		num_products++;
 	}
+	cout << num_products << " Products loaded successfully!" << endl << endl;
 	fin.close();
 }
 
+//function to write the data to a file
+void write_array(Product *save_myarray, int total_products) {
+	ofstream fout;
+	fout.open("Database.txt");
+	if(fout.fail()) {
+		cout << "Failed to save the data to Database.txt" << endl;
+		exit(1);
+	}
+	for(int  i = 0; i < total_products; ++i) {
+		fout << save_myarray[i].name << " ";
+		fout << save_myarray[i].type << " ";
+		fout << save_myarray[i].price << " ";
+		fout << save_myarray[i].quantity << " ";
+		fout << save_myarray[i].days_left << " ";
+		fout << save_myarray[i].batch << endl;
+	}
+	fout.close();
+}
+//
 int main() {
-  int choice, size = 10;
+  int choice, size = 10, num_products = 0;
   Product database[10]; //array to store all our products
-  load_array(database, size);  //initializing program from last saved version
+  load_array(database, size, num_products);  //initializing program from last saved version
   choice = menu();
   while (choice != 6) {
 	cout << endl;
@@ -224,6 +249,7 @@ int main() {
     }
     choice = menu();
   }
+  write_array(database, num_products);
   cout << "\nThank you for using Leo & Taha's 82 Inventory Management System!\nHave a nice day! :)\nBye Bye! ^_^" << endl;
 }
 
