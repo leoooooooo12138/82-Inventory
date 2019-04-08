@@ -1,0 +1,4 @@
+Mangoes Perishables 10 20 3 A
+Apples Perishables 20 5 4 A1
+Drinks Bottled 5 100 90 B1
+Cashews Nuts 50 100 100 C1

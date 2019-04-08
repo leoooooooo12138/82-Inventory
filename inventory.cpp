@@ -11,7 +11,7 @@ int menu() { // Taha
   int action;
   cout << "*************************************************" << endl;
   cout << "***Leo & Taha's 82 Inventory Management System***" << endl;
-  cout << "******--What would you like to do today?--*******" << endl;
+  cout << "******---  What would you like to do?  ---*******" << endl;
   cout << "*******    Choose an option from below    *******" << endl;
   cout << "*1. Add a new product                           *" << endl;
   cout << "*2. Update Existing Product                     *" << endl;
@@ -32,7 +32,7 @@ struct Product { // Taha
 	int days_left;
 	string batch;
 };
-
+/*
 void addproduct( Product arrayofgoods[],int &number) // Leo
 {
 	cout << "Please enter the product name: " << endl;
@@ -50,8 +50,7 @@ void addproduct( Product arrayofgoods[],int &number) // Leo
 
 	arrayofgoods[number + 1] = Product;
 	number += 1;
-
-}
+}*/
 
 void updateproduct(Product goodsarray[], int size, string updateproduct, string lot) // Taha
 {
@@ -63,7 +62,8 @@ void updateproduct(Product goodsarray[], int size, string updateproduct, string 
 			break;
 		}
 		else if(i + 1 == size) {  //incase we reach last iteration and product still not found
-			cout <<"\nSorry, The Product you are looking for does not exist in the database." << endl;
+			cout <<"\nSorry, The Product you are looking for does not exist in the database." << endl << endl;
+			Sleep(500);
 			return;
 		}
 	}
@@ -76,7 +76,15 @@ void updateproduct(Product goodsarray[], int size, string updateproduct, string 
 	cout << "\nEnter the new Expiry date: ";
 	cin >> goodsarray[loc].days_left;
 	
-	cout << "\nProduct Updated Successfully! ^_^ " << endl;
+	cout << "\nHang on a minute " << goodsarray[loc].name << " is being added";
+	int repeat = 0;
+	while (repeat != 3){
+		Sleep(350);
+		cout << ".";
+		repeat++;
+	}
+	cout << "\nProduct Updated Successfully! ^_^ " << endl << endl;
+	Sleep(500);
 }
 
 void checkproduct() // Leo
@@ -93,7 +101,7 @@ void reminder() // Taha
 {
 
 }
-
+/*
 void inventory_worth( Product arrayofgoods[], int &number) // Leo
 {
 	string productname;
@@ -120,6 +128,7 @@ void inventory_worth( Product arrayofgoods[], int &number) // Leo
 	}
 
 }
+*/
 
 //function to double size of array. Current is current array and len is current size. new size will be 2*len
 Product* increase_size(Product *&current, int &len) {  //Taha
@@ -134,12 +143,12 @@ Product* increase_size(Product *&current, int &len) {  //Taha
 }
 
 //function to load data from database using file input
-Product* load_array(Product *array, int sizeofarray) // Taha
+void load_array(Product *array, int sizeofarray) // Taha
 {
-	cout << "Please wait a moment as the program is loading ";
+	cout << "Please wait a moment while the program is loading ";
 	int repeat = 0;
-	while (repeat != 5){
-		Sleep(300);
+	while (repeat != 4){
+		Sleep(350);
 		cout << ".";
 		repeat++;
 	}
@@ -148,14 +157,14 @@ Product* load_array(Product *array, int sizeofarray) // Taha
 	stringstream ss;
 	string lineofdata;
 	ifstream fin;
-	fin.open("database.txt");
+	fin.open("Database.txt");
 	if(fin.fail()) {
 	    cout << "Failed to open database.txt" << endl;
 		exit(1);
 	}
 	repeat = 0;
-	while(repeat !=3){
-		Sleep(400);
+	while(repeat !=3) {
+		Sleep(300);
 		cout << "." << endl;
 		repeat++;
 	}
@@ -166,17 +175,19 @@ Product* load_array(Product *array, int sizeofarray) // Taha
 	    }
 	    ss.str(lineofdata);
 		ss >> array[idx].name;
+		ss >> array[idx].type;
 		ss >> array[idx].price;
 		ss >> array[idx].quantity;
 		ss >> array[idx].days_left;
 		ss >> array[idx].batch;
 		idx++;
 	}
+	fin.close();
 }
 
 int main() {
   int choice, size = 10;
-  Product *database;  //pointer to struct array to store all our products
+  Product database[10]; //array to store all our products
   load_array(database, size);  //initializing program from last saved version
   choice = menu();
   while (choice != 6) {
@@ -189,7 +200,7 @@ int main() {
   
 	  case 2: {
 		string update, batch;
-		cout << "Which product would you like to update?";
+		cout << "Which product would you like to update: ";
 		cin >> update;
 		cout << "\nPlease enter the batch number for this product: ";
 		cin >> batch;
@@ -197,11 +208,11 @@ int main() {
 		break;
       }	  
 	  case 3: {
-		checkproduct();
+		//checkproduct();
 		break;
       }
 	  case 4: {
-	    forecast();
+	    //forecast();
 		break;
       }	
 	  case 5: {
@@ -211,6 +222,7 @@ int main() {
 	  default:
 		cout << "Please choose a number between 1-6!" << endl;
     }
+    choice = menu();
   }
   cout << "\nThank you for using Leo & Taha's 82 Inventory Management System!\nHave a nice day! :)\nBye Bye! ^_^" << endl;
 }
