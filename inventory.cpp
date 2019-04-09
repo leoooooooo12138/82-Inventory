@@ -9,6 +9,8 @@ using namespace std;
 
 int menu() { // Taha
   int action;
+  Sleep(350);
+  cout << endl;
   cout << "*************************************************" << endl;
   cout << "***Leo & Taha's 82 Inventory Management System***" << endl;
   cout << "******---  What would you like to do?  ---*******" << endl;
@@ -16,7 +18,7 @@ int menu() { // Taha
   cout << "*1. Add a new product                           *" << endl;
   cout << "*2. Update Existing Product                     *" << endl;
   cout << "*3. View Products                               *" << endl;
-  cout << "*4. Check Inventory in event of Natural Disaster*" << endl;
+  cout << "*4. Check Stock in case of a Typhoon            *" << endl;
   cout << "*5. Inventory worth                             *" << endl;
   cout << "*6. Quit                                        *" << endl;
   cout << "*************************************************" << endl;
@@ -27,7 +29,7 @@ int menu() { // Taha
 struct Product { // Taha
 	string name;
 	string type;
-	int price;
+	double price;
 	int quantity;
 	int days_left;
 	string batch;
@@ -65,7 +67,7 @@ void updateproduct(Product goodsarray[], int size, string updateproduct, string 
 			break;
 		}
 		else if(i + 1 == size) {  //incase we reach last iteration and product still not found
-			cout <<"\nSorry, The Product you are looking for does not exist in the database." << endl << endl;
+			cout <<"\nSorry, The Product you are looking for does not exist in the database." << endl;
 			Sleep(500);
 			return;
 		}
@@ -79,15 +81,14 @@ void updateproduct(Product goodsarray[], int size, string updateproduct, string 
 	cout << "\nEnter the new Expiry date: ";
 	cin >> goodsarray[loc].days_left;
 	
-	cout << "\nHang on a minute " << goodsarray[loc].name << " is being added";
+	cout << "\nPlease hang on a minute " << goodsarray[loc].name << " is being added";
 	int repeat = 0;
 	while (repeat != 3){
 		Sleep(350);
 		cout << ".";
 		repeat++;
 	}
-	cout << "\nProduct Updated Successfully! ^_^ " << endl << endl;
-	Sleep(500);
+	cout << "\nProduct Updated Successfully! ^_^ " << endl;
 }
 
 void checkproduct() // Leo
@@ -162,7 +163,7 @@ void load_array(Product *array, int sizeofarray, int &num_products) // Taha
 	ifstream fin;
 	fin.open("Database.txt");
 	if(fin.fail()) {
-	    cout << "Failed to open database.txt" << endl;
+	    cout << "Failed to open Database.txt" << endl;
 		exit(1);
 	}
 	repeat = 0;
@@ -176,7 +177,7 @@ void load_array(Product *array, int sizeofarray, int &num_products) // Taha
 	    if(idx == sizeofarray) {  //incase our product number reaches max size of the array, then increase the size of array
 	    	increase_size(array, sizeofarray);
 	    }
-	    ss.clear();  //to clear the stream
+	    ss.clear();  //tdont forget to clear the stream
 	    ss.str(lineofdata);
 		ss >> array[idx].name;
 		ss >> array[idx].type;
@@ -187,7 +188,12 @@ void load_array(Product *array, int sizeofarray, int &num_products) // Taha
 		idx++;
 		num_products++;
 	}
-	cout << num_products << " Products loaded successfully!" << endl << endl;
+	if(num_products == 0 || num_products > 1) {
+		cout << num_products << " Products loaded successfully!" << endl;
+	}
+	else {
+		cout << num_products << " Product loaded successfully!" << endl;
+	}
 	fin.close();
 }
 
@@ -196,7 +202,7 @@ void write_array(Product *save_myarray, int total_products) {
 	ofstream fout;
 	fout.open("Database.txt");
 	if(fout.fail()) {
-		cout << "Failed to save the data to Database.txt" << endl;
+		cout << "Failed to save data to Database.txt" << endl;
 		exit(1);
 	}
 	for(int  i = 0; i < total_products; ++i) {
@@ -245,7 +251,7 @@ int main() {
 		break;
       }
 	  default:
-		cout << "Please choose a number between 1-6!" << endl;
+		cout << "Please choose a number between 1 & 6" << endl;
     }
     choice = menu();
   }
