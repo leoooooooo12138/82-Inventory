@@ -1,0 +1,19 @@
+The data is stored in an output file called "Database.txt"
+Each time the program runs, this data is loaded, and when the program ends, the updated data is overwritten
+Incase the program fails to load the file, an error message will be shown as well as if it fails to write it before ending the program
+Each product is stored in a line, separated by a space, in the format:
+Name Type Price Quantity Daysleftforexpiry Batch
+where name is a string without any space
+type is a string without space
+price is a double type
+quantity is an integer
+daysleftforexpiry is an integer
+batch is a string without a space
+
+There will be a reminder for expiry if "Perishables" are about to expire in 1 day.
+There will be a reminder for expiry if "Non Perishables" are about to expire within 1 week.
+There will be a reminder for excess inventory if there are more than 10000 units of a particular Product.
+
+
+
+

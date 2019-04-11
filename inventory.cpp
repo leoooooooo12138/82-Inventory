@@ -3,29 +3,49 @@
 #include <string>
 #include <sstream>
 #include <fstream>
+#include <limits>
 #include <windows.h>
+
 using namespace std;
 
-
-int menu() { // Taha
+std::string to_string(int i) {
+	stringstream ss;
+	ss << i;
+	return ss.str();
+}
+/*this function takes an int argument which is the number of different reminders
+if the reminders are 0, then it simply displays the menu
+otherwise it will also display that there are n number of reminders
+the input of this function is the action that the user will choose to do
+the function returns the int that specifies what action the user wants to do*/
+int menu(int reminders) { // Taha
   int action;
   Sleep(350);
   cout << endl;
+  if(reminders != 0) {
+  	if(reminders == 1) {
+  		cout << "##There is one important reminder you should look into##" << endl;
+	  }
+	else {
+		cout << "##There are  " << reminders << " important reminders you should look into##" << endl;
+	}
+  }
   cout << "*************************************************" << endl;
   cout << "***Leo & Taha's 82 Inventory Management System***" << endl;
   cout << "******---  What would you like to do?  ---*******" << endl;
   cout << "*******    Choose an option from below    *******" << endl;
-  cout << "*1. Add a new product                           *" << endl;
-  cout << "*2. Update Existing Product                     *" << endl;
-  cout << "*3. View Products                               *" << endl;
-  cout << "*4. Check Stock in case of a Typhoon            *" << endl;
-  cout << "*5. Inventory worth                             *" << endl;
-  cout << "*6. Quit                                        *" << endl;
+  cout << "*1. Check reminders                             *" << endl;
+  cout << "*2. Add a new product                           *" << endl;
+  cout << "*3. Update Existing Product                     *" << endl;
+  cout << "*4. View Products                               *" << endl;
+  cout << "*5. Check Stock in case of a Typhoon            *" << endl;
+  cout << "*6. Inventory worth                             *" << endl;
+  cout << "*7. Quit                                        *" << endl;
   cout << "*************************************************" << endl;
-  //reminder();
   cin >> action;
   return action;
 }
+
 struct Product { // Taha
 	string name;
 	string type;
@@ -34,10 +54,11 @@ struct Product { // Taha
 	int days_left;
 	string batch;
 };
+
 /*
 //this function will etiher return an integer (or update by reference) that keeps track of how many items there are in total in the function. Please incorporate a counter var in the function to keep track of how many products
 //there are in the array. i need this info.
-//i have added the number in the header
+//i have added the number in the header. One will store the size of the array but the other stores how many items there are inside
 int addproduct( Product arrayofgoods[],int &number, int num_products) // Leo
 {
 	cout << "Please enter the product name: " << endl;
@@ -57,6 +78,10 @@ int addproduct( Product arrayofgoods[],int &number, int num_products) // Leo
 	number += 1;
 }*/
 
+/*This function will update a certain product that the user wishes to modify (taken as input before the function was called and now passed by value)
+it will take the struct array, numbers of products in the array, what product to update and the batch string as its arguments
+it will then search for this product in the array and update it according to how the user wishes by taking in input of new price, quantity & expiry
+if the product is not found a message as such will be displayed*/
 void updateproduct(Product goodsarray[], int size, string updateproduct, string lot) // Taha
 {
 	//need to locate product first
@@ -67,8 +92,7 @@ void updateproduct(Product goodsarray[], int size, string updateproduct, string 
 			break;
 		}
 		else if(i + 1 == size) {  //incase we reach last iteration and product still not found
-			cout <<"\nSorry, The Product you are looking for does not exist in the database." << endl;
-			Sleep(500);
+			cout <<"\nSorry, The Product you are looking for does not exist in the database. :/" << endl;
 			return;
 		}
 	}
@@ -91,7 +115,7 @@ void updateproduct(Product goodsarray[], int size, string updateproduct, string 
 	cout << "\nProduct Updated Successfully! ^_^ " << endl;
 }
 
-void checkproduct() // Leo
+void viewproduct() // Leo
 {
 
 }
@@ -101,9 +125,42 @@ void forecast() // Leo
 
 }
 
-void reminder() // Taha
+/*A function to check for important issues to bring to the user's attention before he makes any decision.
+the input is the struct array, number of products, as well as a by reference int value for how many imp reminders there are and 
+a char that specifies whether we want to be printing out the reminders as well or just updating the value of how many reminders there are
+incase the char is I, only the number of reminders value will be updated, but incase it is different, this function will print out the reminders
+*/
+void reminder(Product *array, int num_p, int &notices, char demand) // Taha
 {
-
+	string output;
+	notices = 0; //resetting value of notices, to put a fresh calculated value
+	//checking expiry
+	for(int i = 0; i < num_p; ++i) {
+		if(array[i].type != "Perishables" && array[i].days_left < 7) {  //need to treat perishables separately due to their shorter life
+			output += "--> " + array[i].name + " of Batch " + array[i].batch + " will expire in " + to_string(array[i].days_left) + " day(s).\n";
+			++notices;
+		}
+		else if (array[i].type == "Perishables" && array[i].days_left < 2) {
+			output += "--> " + array[i].name + " of Batch " + array[i].batch + " will expire in " + to_string((array[i].days_left)) + " day.\n";
+			++notices;
+		}
+	}
+	//checking excess inventory
+	for(int j = 0; j < num_p; ++j) {
+		if(array[j].quantity > 10000) {
+			output += "--> " + std::string("There are ") + to_string((array[j].quantity)) + " units of unsold " + array[j].name + " of Batch " + array[j].batch + ".\n";
+			++notices;
+		}
+	}
+	if(demand == 'I') {  //no need to print anything, only the count of notices was wanted
+		return;
+	}
+	else if(notices == 0) {  //incase viewer chooses option 1 even when there are no imp reminders
+		cout << "Great News! You have no pending issues to take note of. \n";
+	}
+	else {
+		cout << "Your attention is called to the following pending issues you may wish to resolve: \n" << output;
+	}
 }
 /*
 void inventory_worth( Product arrayofgoods[], int &number) // Leo
@@ -134,8 +191,10 @@ void inventory_worth( Product arrayofgoods[], int &number) // Leo
 }
 */
 
-//function to double size of array. Current is current array and len is current size. new size will be 2*len
-Product* increase_size(Product *&current, int &len) {  //Taha
+/*function to dynamically double size of array.
+the inputs are current array pointer which is passed by reference so at the end this pointer is updated to the new bigger array and the current size of the array
+the new size will be 2*len*/
+void increase_size(Product *&current, int &len) {  //Taha
 	Product *ptr_to_delete_prev =  current;  //to free up this memory later
 	Product *biggerarray = new Product [2*len];  //creating the new bigger array
 	for(int i = 0; i < len; i++) {  //to copy all the elements from older to newer
@@ -146,7 +205,9 @@ Product* increase_size(Product *&current, int &len) {  //Taha
 	len = len*2; //updating the size of our array by reference
 }
 
-//function to load data from database using file input
+/*This function will load the database from the database file when the program is run
+it takes a pointer to the aray, as well as size of the array and the number of products in it currently
+it will then insert these products into the array for further processing by the program*/
 void load_array(Product *array, int sizeofarray, int &num_products) // Taha
 {
 	cout << "Please wait a moment while the program is loading ";
@@ -197,7 +258,10 @@ void load_array(Product *array, int sizeofarray, int &num_products) // Taha
 	fin.close();
 }
 
-//function to write the data to a file
+/*This function outputs the final list of products which are stored in the memory and writes them to the output file. it will be called before
+the program terminates. The input is the struct array as well as how many products there are in the array while the output is a file containing all the
+details of each product in separate lines for each product
+*/
 void write_array(Product *save_myarray, int total_products) {
 	ofstream fout;
 	fout.open("Database.txt");
@@ -217,45 +281,54 @@ void write_array(Product *save_myarray, int total_products) {
 }
 //
 int main() {
-  int choice, size = 10, num_products = 0;
-  Product database[10]; //array to store all our products
+  int choice, size = 10, num_products = 0, notices = 0;
+  Product database[10]; //struct array to store all our products
   load_array(database, size, num_products);  //initializing program from last saved version
-  choice = menu();
-  while (choice != 6) {
+  reminder(database, num_products, notices, 'I');  //I argument so we only get the number of notices, the reminders wont be posted
+  choice = menu(notices);
+  while (choice != 7) {
 	cout << endl;
 	switch(choice) {
 	  case 1: {
+	  	reminder(database, num_products, notices, 'P');  //P arg will mean it prints out the reminders instead of only calculating how many reminders there are
+		break;
+	  }
+	  case 2: {
 		//addproduct();
 		break;
 	  }
-  
-	  case 2: {
+	  case 3: {
 		string update, batch;
 		cout << "Which product would you like to update: ";
 		cin >> update;
 		cout << "\nPlease enter the batch number for this product: ";
 		cin >> batch;
-		updateproduct(database, size, update, batch);
+		updateproduct(database, num_products, update, batch);
 		break;
       }	  
-	  case 3: {
-		//checkproduct();
+	  case 4: {
+		//viewproduct();
 		break;
       }
-	  case 4: {
+	  case 5: {
 	    //forecast();
 		break;
       }	
-	  case 5: {
+	  case 6: {
 	    //inventory_worth();
 		break;
       }
-	  default:
-		cout << "Please choose a number between 1 & 6" << endl;
+	  default: {
+	  	cout << "Please choose a number between 1 & 7" << endl;
+	  	cin.clear();
+		cin.ignore(numeric_limits<streamsize>::max(), '\n');  //for max size of buffer or until newline
+	  }
     }
-    choice = menu();
+    
+    reminder (database, num_products, notices, 'I'); //update the value of notices incase any action taken, I so nothing gets printed
+    choice = menu(notices);
   }
   write_array(database, num_products);
-  cout << "\nThank you for using Leo & Taha's 82 Inventory Management System!\nHave a nice day! :)\nBye Bye! ^_^" << endl;
+  cout << "\nThank you for using Leo & Taha's 82 Inventory Management System!\nHave a nice day! :)\nBye Bye!" << endl;
 }
 
