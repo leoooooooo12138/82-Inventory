@@ -116,7 +116,7 @@ void updateproduct(Product goodsarray[], int size, string updateproduct, string 
 }
 
 void viewproduct(Product goodsarray[], int size, string checkproduct, string batch ) // Leo
-{
+{/*
 	int counter = 0;
 	if (batch == 'No')
 	{
@@ -144,7 +144,7 @@ void viewproduct(Product goodsarray[], int size, string checkproduct, string bat
 	if (counter == 0)
 	{
 		cout << "\nSorry, the product you are looking for does not exist in the database, you might wanna input again to prevent possible typos if you're sure the product exist. :)" << endl;
-	}
+	} */
 }
 
 void forecast() // Leo
@@ -334,12 +334,12 @@ int main() {
 		break;
       }	  
 	  case 4: {
-		string check, batch;
+		/*string check, batch;
 		cout << "Which product would you like to check on: ";
 		cin >> check;
 		cout << "\nPlease enter the batch number for this product: ";
 		cin >> batch;
-		viewproduct(database, num_products, check, batch);
+		viewproduct(database, num_products, check, batch);*/
 		break;
       }
 	  case 5: {
