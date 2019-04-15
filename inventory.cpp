@@ -115,16 +115,30 @@ void updateproduct(Product goodsarray[], int size, string updateproduct, string 
 	cout << "\nProduct Updated Successfully! ^_^ " << endl;
 }
 
-void viewproduct(Product goodsarray[], int size, string checkproduct) // Leo
+void viewproduct(Product goodsarray[], int size, string checkproduct, string batch ) // Leo
 {
 	int counter = 0;
-	for (int i = 0; i < size; i++)
+	if (batch == 'No')
 	{
-		if (goodsarray[i].name == checkproduct)
+		for (int i = 0; i < size; i++)
 		{
-			counter += 1;
-			cout << "\nYou have " << checkproduct << " of batch " << goodsarray[i].batch << " with the current selling price of " << goodsarray[i].price << " in stock, the overall quantity of this batch is " << goodsarray[i].quantity << " . They'll have " << goodsarray[i].days_left << " day(s) before expire." << endl;
-			continue;
+			if (goodsarray[i].name == checkproduct)
+			{
+				counter += 1;
+				cout << "\nYou have " << checkproduct << " of batch " << goodsarray[i].batch << " with the current selling price of " << goodsarray[i].price << " in stock, the overall quantity of this batch is " << goodsarray[i].quantity << " . They'll have " << goodsarray[i].days_left << " day(s) before expire." << endl;
+				continue;
+			}
+		}
+	}
+	else
+	{
+		for (int i = 0; i < size; i++)
+		{
+			if (goodsarray[i].name == checkproduct && goodsarray[i].batch == batch)
+			{
+				counter += 1;
+				cout << "\nYou have " << checkproduct << " of batch " << goodsarray[i].batch << " with the current selling price of " << goodsarray[i].price << " in stock, the overall quantity of this batch is " << goodsarray[i].quantity << " . They'll have " << goodsarray[i].days_left << " day(s) before expire." << endl;
+			}
 		}
 	}
 	if (counter == 0)
@@ -320,7 +334,12 @@ int main() {
 		break;
       }	  
 	  case 4: {
-		//viewproduct();
+		string check, batch;
+		cout << "Which product would you like to check on: ";
+		cin >> check;
+		cout << "\nPlease enter the batch number for this product: ";
+		cin >> batch;
+		viewproduct(database, num_products, check, batch);
 		break;
       }
 	  case 5: {
