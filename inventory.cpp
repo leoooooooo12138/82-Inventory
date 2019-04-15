@@ -92,7 +92,7 @@ void updateproduct(Product goodsarray[], int size, string updateproduct, string 
 			break;
 		}
 		else if(i + 1 == size) {  //incase we reach last iteration and product still not found
-			cout <<"\nSorry, The Product you are looking for does not exist in the database. :/" << endl;
+			cout <<"\nSorry, the Product you are looking for does not exist in the database. :/" << endl;
 			return;
 		}
 	}
@@ -115,9 +115,22 @@ void updateproduct(Product goodsarray[], int size, string updateproduct, string 
 	cout << "\nProduct Updated Successfully! ^_^ " << endl;
 }
 
-void viewproduct() // Leo
+void viewproduct(Product goodsarray[], int size, string checkproduct) // Leo
 {
-
+	int counter = 0;
+	for (int i = 0; i < size; i++)
+	{
+		if (goodsarray[i].name == checkproduct)
+		{
+			counter += 1;
+			cout << "\nYou have " << checkproduct << " of batch " << goodsarray[i].batch << " with the current selling price of " << goodsarray[i].price << " in stock, the overall quantity of this batch is " << goodsarray[i].quantity << " . They'll have " << goodsarray[i].days_left << " day(s) before expire." << endl;
+			continue;
+		}
+	}
+	if (counter == 0)
+	{
+		cout << "\nSorry, the product you are looking for does not exist in the database, you might wanna input again to prevent possible typos if you're sure the product exist. :)" << endl;
+	}
 }
 
 void forecast() // Leo
