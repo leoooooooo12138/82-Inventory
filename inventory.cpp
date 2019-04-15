@@ -115,17 +115,18 @@ void updateproduct(Product goodsarray[], int size, string updateproduct, string 
 	cout << "\nProduct Updated Successfully! ^_^ " << endl;
 }
 
-void viewproduct(Product goodsarray[], int size, string checkproduct, string batch ) // Leo
-{/*
+void viewproduct(Product goodsarray[], int size, string checkproduct, string batchstring ) // Leo
+{
 	int counter = 0;
-	if (batch == 'No')
+	string No = "No";
+	if (batchstring == No)
 	{
 		for (int i = 0; i < size; i++)
 		{
 			if (goodsarray[i].name == checkproduct)
 			{
 				counter += 1;
-				cout << "\nYou have " << checkproduct << " of batch " << goodsarray[i].batch << " with the current selling price of " << goodsarray[i].price << " in stock, the overall quantity of this batch is " << goodsarray[i].quantity << " . They'll have " << goodsarray[i].days_left << " day(s) before expire." << endl;
+				cout << "\nYou have " << checkproduct << " of batch " << goodsarray[i].batch << " with the current selling price of " << goodsarray[i].price << " in stock, the overall quantity of this batch is " << goodsarray[i].quantity << ". They'll have " << goodsarray[i].days_left << " day(s) before expire." << endl;
 				continue;
 			}
 		}
@@ -134,7 +135,7 @@ void viewproduct(Product goodsarray[], int size, string checkproduct, string bat
 	{
 		for (int i = 0; i < size; i++)
 		{
-			if (goodsarray[i].name == checkproduct && goodsarray[i].batch == batch)
+			if (goodsarray[i].name == checkproduct && goodsarray[i].batch == batchstring)
 			{
 				counter += 1;
 				cout << "\nYou have " << checkproduct << " of batch " << goodsarray[i].batch << " with the current selling price of " << goodsarray[i].price << " in stock, the overall quantity of this batch is " << goodsarray[i].quantity << " . They'll have " << goodsarray[i].days_left << " day(s) before expire." << endl;
@@ -144,7 +145,7 @@ void viewproduct(Product goodsarray[], int size, string checkproduct, string bat
 	if (counter == 0)
 	{
 		cout << "\nSorry, the product you are looking for does not exist in the database, you might wanna input again to prevent possible typos if you're sure the product exist. :)" << endl;
-	} */
+	} 
 }
 
 void forecast() // Leo
@@ -334,12 +335,12 @@ int main() {
 		break;
       }	  
 	  case 4: {
-		/*string check, batch;
+		string check, batch;
 		cout << "Which product would you like to check on: ";
 		cin >> check;
-		cout << "\nPlease enter the batch number for this product: ";
+		cout << "\nPlease enter the batch number for this product (if you wanna check all the batches of one product, enter No): ";
 		cin >> batch;
-		viewproduct(database, num_products, check, batch);*/
+		viewproduct(database, num_products, check, batch);
 		break;
       }
 	  case 5: {
