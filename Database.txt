@@ -2,3 +2,5 @@ Mangoes Perishables 10 200 3 A
 Drinks Packaged 5 100 50 D1
 Meat Perishables 50 2000 10 M1
 Chips Packaged 5 200 1500 C1
+Drinks Packaged 5 200 20 D2
+Drinks Packaged 5 400 30 D3
