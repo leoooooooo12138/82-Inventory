@@ -5,6 +5,8 @@
 #include <fstream>
 #include <limits>
 #include <windows.h>
+#include <stdio.h>
+#include <math.h>
 
 using namespace std;
 
@@ -30,18 +32,18 @@ int menu(int reminders) { // Taha
 		cout << "##There are  " << reminders << " important reminders you should look into##" << endl;
 	}
   }
-  cout << "*************************************************" << endl;
-  cout << "***Leo & Taha's 82 Inventory Management System***" << endl;
-  cout << "******---  What would you like to do?  ---*******" << endl;
-  cout << "*******    Choose an option from below    *******" << endl;
-  cout << "*1. Check reminders                             *" << endl;
-  cout << "*2. Add a new product                           *" << endl;
-  cout << "*3. Update Existing Product                     *" << endl;
-  cout << "*4. View Products                               *" << endl;
-  cout << "*5. Check Stock in case of a Typhoon            *" << endl;
-  cout << "*6. Inventory worth                             *" << endl;
-  cout << "*7. Quit                                        *" << endl;
-  cout << "*************************************************" << endl;
+  cout << "***********************************************************************" << endl;
+  cout << "**************Leo & Taha's 82 Inventory Management System**************" << endl;
+  cout << "******---             What would you like to do?             ---*******" << endl;
+  cout << "*******                  Choose an option from below            *******" << endl;
+  cout << "*1. Check reminders                                                   *" << endl;
+  cout << "*2. Add a new product                                                 *" << endl;
+  cout << "*3. Update Existing Product                                           *" << endl;
+  cout << "*4. View Products                                                     *" << endl;
+  cout << "*5. Inventory checking and predicting in events of natural disaster   *" << endl;
+  cout << "*6. Inventory worth                                                   *" << endl;
+  cout << "*7. Quit                                                              *" << endl;
+  cout << "***********************************************************************" << endl;
   cin >> action;
   return action;
 }
@@ -55,28 +57,41 @@ struct Product { // Taha
 	string batch;
 };
 
-/*
+
 //this function will etiher return an integer (or update by reference) that keeps track of how many items there are in total in the function. Please incorporate a counter var in the function to keep track of how many products
 //there are in the array. i need this info.
 //i have added the number in the header. One will store the size of the array but the other stores how many items there are inside
-int addproduct( Product arrayofgoods[],int &number, int num_products) // Leo
+void addproduct( Product goodsarray[], int &size) // Leo
 {
+	ofstream fout;
+	fout.open("Database.txt",ios::app);
+	if (fout.fail())
+	{
+		cout << "Failed to save data to Database.txt" << endl;
+		exit(1);
+	}
+	size += 1;
 	cout << "Please enter the product name: " << endl;
-	cin >> Product.name >> endl;
+	cin >> goodsarray[size-1].name;
+	fout << "\n" << goodsarray[size - 1].name << " ";
 	cout << "Please enter the product type: " << endl;
-	cin >> Product.type >> endl;
-	cout << "Please enter " << Product.name << "'s unit price (if it is liquid, per liter; if it is meat product, per kilogram): " << endl;
-	cin >> Product.price >> endl;
-	cout << "How much " << Product.name << " you would like to add this time? : " << endl;
-	cin >> Product.quantity >> endl;
-	cout << "How many days can " << Product.name << " last till it comes expired? : " << endl;
-	cin >> Product.days_left >> endl;
-	cout << "Please enter the batch number of this batch of " << Product.name << " : " << endl;
-	cin >> Product.batch >> endl;
-
-	arrayofgoods[number + 1] = Product;
-	number += 1;
-}*/
+	cin >> goodsarray[size-1].type;
+	fout << goodsarray[size - 1].type << " ";
+	cout << "Please enter " << goodsarray[size-1].name << "'s unit price (if it is liquid, per liter; if it is meat product, per kilogram): " << endl;
+	cin >> goodsarray[size-1].price;
+	fout << goodsarray[size - 1].price << " ";
+	cout << "How much " << goodsarray[size-1].name << " you would like to add this time? : " << endl;
+	cin >> goodsarray[size-1].quantity;
+	fout << goodsarray[size - 1].quantity << " ";
+	cout << "How many days can " << goodsarray[size-1].name << " last till it comes expired? : " << endl;
+	cin >> goodsarray[size-1].days_left;
+	fout << goodsarray[size - 1].days_left << " ";
+	cout << "Please enter the batch number of this batch of " << goodsarray[size-1].name << " : " << endl;
+	cin >> goodsarray[size-1].batch;
+	fout << goodsarray[size - 1].batch << endl;
+	fout.close();
+	return;
+}
 
 /*This function will update a certain product that the user wishes to modify (taken as input before the function was called and now passed by value)
 it will take the struct array, numbers of products in the array, what product to update and the batch string as its arguments
@@ -148,10 +163,244 @@ void viewproduct(Product goodsarray[], int size, string checkproduct, string bat
 	} 
 }
 
-void forecast() // Leo
+void forecast(Product goodsproduct[], int size) // Leo
 {
+	string disaster;
+	string response, NO="NO";
+	cout << "Which natural disaster are you expecting to encounter? " << endl;
+	cin >> disaster;
+	cout << "This is a total list of your current inventory stored in the system, is there anything different from the actual inventory you'd like to update us with? (If nothing more, type NO) " << endl;
+	cin >> response;
+	while (reponse != NO)
+	{
+		string batch;
+		cout << "Which batch of " << response << " you'd like to update?" << endl;
+		cin >> batch;
+		updateproduct(goodsproduct, size, response, batch);
+		cout << "Anything more?" << endl;
+		cin >> response;
+	}
+	cout << "Which product you would like to make prediction on? " << endl;
+	string predictent;
+	cin >> predictent;
+	cout << "OK, in order to make prediction on " << predictent << " as to encounter the coming of " << disaster << ", we need some more information, stick with us. " << endl;
+	cout << "There are several prediction methods for you to choose from, each with different specifications on the input parameters." << endl;
+	cout << "These methods are as follows: " << endl;
+	cout << "1.Time Series ( Number of months to which you have data, every individual data)" << endl;
+	cout << "2.Linear Regression methods (1,2,3,4)" << endl;
+	cout << "3.Multiplicative Seasonal Methods (1,2,3,4)" << endl;
+	cout << "If you're not sure what they stand for, enter 4 or 5 or 6 for each one of the method's definition respectively. " << endl;
+	int method;
+	cout << "Which one would you like to choose? " << endl;
+	cin >> method;
+	while (method != 1 || method != 2 || method != 3)
+	{
+		switch (method)
+		{
+			case 4:
+			{
+				cout << "Time Series Prediction: Uses historical data assuming that what has occurred in the past will continue to occur in the future. " << endl;
+			}
+			case 5:
+			{
+				cout << "Try to fits a trend one degree equation to a series of historical data point, thus predicting the future data with exsiting trend. " << endl;
+			}
+			case 6:
+			{
+				cout << "Regular upward or downward movements in a time series that tie to recurrent events. " << endl;
+			}
+		}
+		cout << "So, which one would you like to choose? " << endl;
+	}
+	switch (method)
+	{
+		case 1:
+		{
+			cout << "In time series prediction, you'll need to feed us with the following information: " << endl;
+			cout << "The number of continuous month on which you have data to, prior to this month (1, 3, 5 or 7. The greater the number is, the more accurate this prediction will likely be, in other words, the more data you have, the better. ): " << endl;
+			int n;
+			cin >> n;
+			time_series_prediction(goodsproduct, n, predictent, size);
+		}
+		case 2:
+		{
+			cout << "In linear regression prediction, you'll need to feed us with the following information: " << endl;
+			cout << "The number of data sets you have, in the format of (month, quantity): " << endl;
+			int n;
+			linear_regression_prediction(n);
+		}
+		case 3:
+		{
+			multiplicative_seasonal_prediction();
+		}
+	}
+
+	return;
+}
+
+void time_series_prediction(Product goodsproduct[], int n, string predictent, int size)
+{
+	cout << "Please enter the data of previous months you have in order: " << endl;
+	int sum = 0;
+	switch (n)
+	{
+		case 1:
+		{
+			int whatever;
+			cin >> whatever;
+			cout << "It is likely that the demand of " << predictent << " will be " << whatever << " in the next 30 days. " << endl;
+			int sum = 0;
+			for (int i = 0; i < size; i++)
+			{
+				if (goodsproduct[i].name == predictent && goodsproduct[i].days_left >= 30)
+				{
+					sum += goodsproduct[i].quantity;
+				}
+			}
+			if (sum <= whatever)
+			{
+				cout << "Since you only have " << sum << " " << predictent << "(s) left in your inventory that can remain unexpired after the coming 30 days." << endl;
+				cout << "You'd better purchase at least " << whatever - sum << " more " << predictent "(s) with expire date at least 30 days or more, or else you'll face stock out!" << endl;
+			}
+			else
+			{
+				cout << "You have " << sum << " " << predictent << "(s) left in your inventory that can remain unexpired even after the coming 30 days, plenty left, there's no need to worry! " << endl;
+			}
+		}
+		case 3:
+		{
+			double pre = 0;
+			int pred;
+			double d1, d2, d3;
+			cin >> d1;
+			cin >> d2;
+			cin >> d3;
+			pre = d1 * 0.15 + d2 * 0.35 + d3 * 0.5;
+			pred = ceil(pre);
+			int sum = 0;
+			for (int i = 0; i < size; i++)
+			{
+				if (goodsproduct[i].name == predictent && goodsproduct[i].days_left >= 30)
+				{
+					sum += goodsproduct[i].quantity;
+				}
+			}
+			if (sum <= pred)
+			{
+				cout << "Since you only have " << sum << " " << predictent << "(s) left in your inventory that can remain unexpired after the coming 30 days." << endl;
+				cout << "You'd better purchase at least " << pred - sum << " more " << predictent "(s) with expire date at least 30 days or more, or else you'll face stock out!" << endl;
+			}
+			else
+			{
+				cout << "You have " << sum << " " << predictent << "(s) left in your inventory that can remain unexpired even after the coming 30 days, plenty left, there's no need to worry! " << endl;
+			}
+		}
+		case 5:
+		{
+			double pre = 0;
+			int pred;
+			double d1, d2, d3, d4, d5;
+			cin >> d1;
+			cin >> d2;
+			cin >> d3;
+			cin >> d4;
+			cin >> d5;
+			pre = d1 * 0.05 + d2 * 0.15 + d3 * 0.2 + d4 * 0.25 + d5 * 0.35;
+			pred = ceil(pre);
+			int sum = 0;
+			for (int i = 0; i < size; i++)
+			{
+				if (goodsproduct[i].name == predictent && goodsproduct[i].days_left >= 30)
+				{
+					sum += goodsproduct[i].quantity;
+				}
+			}
+			if (sum <= pred)
+			{
+				cout << "Since you only have " << sum << " " << predictent << "(s) left in your inventory that can remain unexpired after the coming 30 days." << endl;
+				cout << "You'd better purchase at least " << pred - sum << " more " << predictent "(s) with expire date at least 30 days or more, or else you'll face stock out!" << endl;
+			}
+			else
+			{
+				cout << "You have " << sum << " " << predictent << "(s) left in your inventory that can remain unexpired even after the coming 30 days, plenty left, there's no need to worry! " << endl;
+			}
+		}
+		case 7:
+		{
+			double pre = 0;
+			int pred;
+			double d1, d2, d3, d4, d5, d6, d7;
+			cin >> d1;
+			cin >> d2;
+			cin >> d3;
+			cin >> d4;
+			cin >> d5;
+			cin >> d6;
+			cin >> d7;
+			pre = d1 * 0.05 + d2 * 0.08 + d3 * 0.1 + d4 * 0.15 + d5 * 0.17 + d6 * 0.2 + d7 * 0.25;
+			pred = ceil(pre);
+			int sum = 0;
+			for (int i = 0; i < size; i++)
+			{
+				if (goodsproduct[i].name == predictent && goodsproduct[i].days_left >= 30)
+				{
+					sum += goodsproduct[i].quantity;
+				}
+			}
+			if (sum <= pred)
+			{
+				cout << "Since you only have " << sum << " " << predictent << "(s) left in your inventory that can remain unexpired after the coming 30 days." << endl;
+				cout << "You'd better purchase at least " << pred - sum << " more " << predictent "(s) with expire date at least 30 days or more, or else you'll face stock out!" << endl;
+			}
+			else
+			{
+				cout << "You have " << sum << " " << predictent << "(s) left in your inventory that can remain unexpired even after the coming 30 days, plenty left, there's no need to worry! " << endl;
+			}
+		}
+	}
+}
+
+void linear_regression_prediction(int n, int month)
+{
+	double sumofx = 0;
+	double sumofy = 0;
+	int arrayofx[n];
+	int arrayofy[n];
+	for (int i = 0; i < n; i++)
+	{
+		int month = 0, demand = 0;
+		cin >> month;
+		arrayofx[i] = month;
+		cin >> demand;
+		arrayofy[i] = demand;
+		sumofx += month;
+		sumofy += demand;
+	}
+	sumofx = sumofx / n;
+	sumofy = sumofy / n;
+	double a, b, sumofa, sumofb, sumofab, sumofa2;
+	for (int i = 0; i < n; i++)
+	{
+		sumofa += arrayofx[i];
+		sumofb += arrayofy[i];
+		sumofab += arrayofx[i] * arrayofy[i];
+		sumofa2 += arrayofx[i] * arrayofx[i];
+	}
+	b = (n*sumofab - sumofa * sumofb) / (n*sumofa2 - sumofa * sumofa);
+	a = sumofy - b * sumofx;
+	double pre=0;
+	int pred;
+	pre = a + b * month;
+	pred = ceil(pre);
+
 
 }
+
+/*void multiplicative_seasonal_prediction()
+{
+
+}*/
+
 
 /*A function to check for important issues to bring to the user's attention before he makes any decision.
 the input is the struct array, number of products, as well as a by reference int value for how many imp reminders there are and 
@@ -190,34 +439,42 @@ void reminder(Product *array, int num_p, int &notices, char demand) // Taha
 		cout << "Your attention is called to the following pending issues you may wish to resolve: \n" << output;
 	}
 }
-/*
-void inventory_worth( Product arrayofgoods[], int &number) // Leo
+
+void inventory_worth( Product goodsarray[], int size) // Leo
 {
 	string productname;
 	cout << "Which product's inventory worth would you like to know? (If you want to know how much is everything worth in the warehouse just to feel like a BOSS, type EVERYTHING)" << endl;
 	cin >> productname;
 	cout << endl;
+	int sum = 0;
 	if (productname == "EVERYTHING")
 	{
-		int sum = 0;
-		for (int i = 0; i < number; i++)
+		for (int i = 0; i < size; i++)
 		{
-			sum += arrayofgoods[i].price * arrayofgoods[i].quantity;
+			sum += goodsarray[i].price * goodsarray[i].quantity;
 		}
-		cout << "You have $" << sum << " worth of products in your warehouse!" << endl;
-	}
-	for (int i = 0; i < number; i++)
-	{
-		int sum = 0;
-		if (productname == arrayofgoods[i].name)
+		if (sum >= 500000)
 		{
-			sum += arrayofgoods[i].price * arrayofgoods[i].quantity;
+			cout << "You have $" << sum << " worth of products in your warehouse! What a richass!" << endl;
+		}
+		else
+		{
+			cout << "You have $" << sum << " worth of products in your warehouse! Go out and purchase more!" << endl;
+		}
+	}
+	else
+	{
+		for (int i = 0; i < size; i++)
+		{
+			if (productname == goodsarray[i].name)
+			{
+				sum += goodsarray[i].price * goodsarray[i].quantity;
+			}
 		}
 		cout << "You have " << sum << "$ worth of " << productname << " in your warehouse!" << endl;
 	}
 
 }
-*/
 
 /*function to dynamically double size of array.
 the inputs are current array pointer which is passed by reference so at the end this pointer is updated to the new bigger array and the current size of the array
@@ -322,7 +579,7 @@ int main() {
 		break;
 	  }
 	  case 2: {
-		//addproduct();
+		addproduct(database, num_products);
 		break;
 	  }
 	  case 3: {
@@ -344,11 +601,11 @@ int main() {
 		break;
       }
 	  case 5: {
-	    //forecast();
+	    forecast();
 		break;
       }	
 	  case 6: {
-	    //inventory_worth();
+	    inventory_worth(database, num_products);
 		break;
       }
 	  default: {
