@@ -1,6 +1,5 @@
-Drinks Packaged 5 100 50 D1
-Meat Perishables 50 2000 10 M1
+Drinks Packaged 5 15 20 D1
+Chicken Perishable 15 20 20 D2
 Chips Packaged 5 200 1500 C1
-Drinks Packaged 5 200 20 D2
-Drinks Packaged 5 400 30 D3
-Drinks Packaged 15 30000 15 D4
+Drinks Packaged 15 15 15 D9
+Ass Fucked 12 170 3000 D10

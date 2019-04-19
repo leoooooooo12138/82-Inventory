@@ -7,8 +7,12 @@
 #include <windows.h>
 #include <stdio.h>
 #include <math.h>
+#include <algorithm>
+#include <bits/stdc++.h>
 
 using namespace std;
+
+
 
 std::string to_string(int i) {
 	stringstream ss;
@@ -40,9 +44,10 @@ int menu(int reminders) { // Taha
   cout << "*2. Add a new product                                                 *" << endl;
   cout << "*3. Update Existing Product                                           *" << endl;
   cout << "*4. View Products                                                     *" << endl;
-  cout << "*5. Inventory checking and predicting in events of natural disaster   *" << endl;
+  cout << "*5. Inventory checking and predicting                                 *" << endl;
   cout << "*6. Inventory worth                                                   *" << endl;
-  cout << "*7. Quit                                                              *" << endl;
+  cout << "*7. Inventory checking and predicting in events of natural disaster   *" << endl;
+  cout << "*8. Quit                                                              *" << endl;
   cout << "***********************************************************************" << endl;
   cin >> action;
   return action;
@@ -56,40 +61,50 @@ struct Product { // Taha
 	int days_left;
 	string batch;
 };
-
+/*function to dynamically double size of array.
+the inputs are current array pointer which is passed by reference so at the end this pointer is updated to the new bigger array and the current size of the array
+the new size will be 2*len*/
+void increase_size(Product *&current, int &len) {  //Taha
+	Product *ptr_to_delete_prev = current;  //to free up this memory later
+	Product *biggerarray = new Product[2 * len];  //creating the new bigger array
+	for (int i = 0; i < len; i++) {  //to copy all the elements from older to newer
+		biggerarray[i] = current[i];
+	}
+	current = biggerarray;  //updating the ptr of the older (smaller) array to the newer (bigger) array
+	delete[] ptr_to_delete_prev;  //releasing memory taken up by smaller array
+	len = len * 2; //updating the size of our array by reference
+}
 
 //this function will etiher return an integer (or update by reference) that keeps track of how many items there are in total in the function. Please incorporate a counter var in the function to keep track of how many products
 //there are in the array. i need this info.
 //i have added the number in the header. One will store the size of the array but the other stores how many items there are inside
-void addproduct( Product goodsarray[], int &size) // Leo
+void addproduct( Product goodsarray[], int &size, int &size_of_array) // Leo
 {
-	ofstream fout;
-	fout.open("Database.txt",ios::app);
-	if (fout.fail())
+	if (size == size_of_array)
 	{
-		cout << "Failed to save data to Database.txt" << endl;
-		exit(1);
+		increase_size(goodsarray, size);
 	}
-	size += 1;
 	cout << "Please enter the product name: " << endl;
-	cin >> goodsarray[size-1].name;
-	fout << "\n" << goodsarray[size - 1].name << " ";
+	cin >> goodsarray[size].name;
 	cout << "Please enter the product type: " << endl;
-	cin >> goodsarray[size-1].type;
-	fout << goodsarray[size - 1].type << " ";
-	cout << "Please enter " << goodsarray[size-1].name << "'s unit price (if it is liquid, per liter; if it is meat product, per kilogram): " << endl;
-	cin >> goodsarray[size-1].price;
-	fout << goodsarray[size - 1].price << " ";
-	cout << "How much " << goodsarray[size-1].name << " you would like to add this time? : " << endl;
-	cin >> goodsarray[size-1].quantity;
-	fout << goodsarray[size - 1].quantity << " ";
-	cout << "How many days can " << goodsarray[size-1].name << " last till it comes expired? : " << endl;
-	cin >> goodsarray[size-1].days_left;
-	fout << goodsarray[size - 1].days_left << " ";
-	cout << "Please enter the batch number of this batch of " << goodsarray[size-1].name << " : " << endl;
-	cin >> goodsarray[size-1].batch;
-	fout << goodsarray[size - 1].batch << endl;
-	fout.close();
+	cin >> goodsarray[size].type;
+	cout << "Please enter " << goodsarray[size].name << "'s unit price (if it is liquid, per liter; if it is meat product, per kilogram): " << endl;
+	cin >> goodsarray[size].price;
+	cout << "How much " << goodsarray[size].name << " you would like to add this time? : " << endl;
+	cin >> goodsarray[size].quantity;
+	cout << "How many days can " << goodsarray[size].name << " last till it comes expired? : " << endl;
+	cin >> goodsarray[size].days_left;
+	cout << "Please enter the batch number of this batch of " << goodsarray[size].name << " : " << endl;
+	cin >> goodsarray[size].batch;
+	cout << "\nPlease hang on a minute " << goodsarray[size].name << " is being added";
+	int repeat = 0;
+	while (repeat != 3) {
+		Sleep(350);
+		cout << ".";
+		repeat++;
+	}
+	cout << "\nProduct added Successfully! ^_^ " << endl;
+	size += 1;
 	return;
 }
 
@@ -130,30 +145,150 @@ void updateproduct(Product goodsarray[], int size, string updateproduct, string 
 	cout << "\nProduct Updated Successfully! ^_^ " << endl;
 }
 
-void viewproduct(Product goodsarray[], int size, string checkproduct, string batchstring ) // Leo
+/* This function takes in the database and its size, to print out what's inside, straight printing using array itself instead of opening file to aviod the situation that newly added item entry can not be preinted*/
+void display(Product goodsproduct[], int size) // Leo
+{
+	for (int i = 0; i < size; i++)
+	{
+		cout << goodsproduct[i].name << " " << goodsproduct[i].type << " " << goodsproduct[i].price << " " << goodsproduct[i].quantity << " " << goodsproduct[i].days_left << " " << goodsproduct[i].batch << endl;
+	}
+	return;
+}
+
+/*Simple Bubble Sort, to sort the cloned database, specified for each of the 3 filters which can be quantified in the Product. Takes in database, its size, and an option index to indicate specific route to commence.*/
+void sortfunction(Product goodsarray[], int option, int size)
+{
+	Product sortedarray[size];
+	for (int i = 0; i < size; i++)
+	{
+		sortedarray[i] = goodsarray[i];
+	}
+	if (option == 2)
+	{
+		for (int i = 0; i < size; ++i)
+		{
+			for (int j = 0; j < size; ++j)
+			{
+				if (sortedarray[i].price > sortedarray[j].price)
+				{
+					Product temp;
+					temp = sortedarray[i];
+					sortedarray[i] = sortedarray[j];
+					sortedarray[j] = temp;
+				}
+			}
+		}
+	}
+	else if (option == 3)
+	{
+		for (int i = 0; i < size; ++i)
+		{
+			for (int j = 0; j < size; ++j)
+			{
+				if (sortedarray[i].quantity > sortedarray[j].quantity)
+				{
+					Product temp;
+					temp = sortedarray[i];
+					sortedarray[i] = sortedarray[j];
+					sortedarray[j] = temp;
+				}
+			}
+		}
+	}
+	else if (option == 4)
+	{
+		for (int i = 0; i < size; ++i)
+		{
+			for (int j = 0; j < size; ++j)
+			{
+				if (sortedarray[i].days_left > sortedarray[j].days_left)
+				{
+					Product temp;
+					temp = sortedarray[i];
+					sortedarray[i] = sortedarray[j];
+					sortedarray[j] = temp;
+				}
+			}
+		}
+	}
+	display(sortedarray, size);
+}
+
+/*The main sorting body of the rest of the unquantifiable filters in Product, and the skeleton program for view product itself, which supports the inspection of the whole data base, with filters featured.*/
+void viewproduct(Product goodsarray[], int size, string checkproduct) // Leo
 {
 	int counter = 0;
 	string No = "No";
-	if (batchstring == No)
+	string EVERYTHING = "EVERYTHING";
+	if (checkproduct == EVERYTHING)
 	{
-		for (int i = 0; i < size; i++)
+		cout << "These are some of the filters for you to choose from." << endl;
+		cout << "1. Product Type." << endl;
+		cout << "2. Product Selling Price." << endl;
+		cout << "3. Product Quantity in Stock." << endl;
+		cout << "4. Product Days Left Before Expiry." << endl;
+		cout << "So, which is it gonna be?" << endl;
+		int option;
+		cin >> option;
+		if (option == 1)
 		{
-			if (goodsarray[i].name == checkproduct)
+			cout << "Which type of product would you like to check on?" << endl;
+			string product_type;
+			cin >> product_type;
+			cout << "So this is all the " << product_type << " products that's currently in stock." << endl;
+			for (int i = 0; i < size; i++)
 			{
-				counter += 1;
-				cout << "\nYou have " << checkproduct << " of batch " << goodsarray[i].batch << " with the current selling price of " << goodsarray[i].price << " in stock, the overall quantity of this batch is " << goodsarray[i].quantity << ". They'll have " << goodsarray[i].days_left << " day(s) before expire." << endl;
-				continue;
+				if (goodsarray[i].type == product_type)
+				{
+					counter += 1;
+					cout << goodsarray[i].name << " " << goodsarray[i].type << " " << goodsarray[i].price << " " << goodsarray[i].quantity << " " << goodsarray[i].days_left << " " << goodsarray[i].batch << endl;
+				}
 			}
+		}
+		else if (option == 2)
+		{
+			counter += 1;
+			cout << "So this is all the products in stock with prices ranging from highest to lowest." << endl;
+			sortfunction(goodsarray, 2, size);
+		}
+		else if (option == 3)
+		{
+			counter += 1;
+			cout << "So this is all the products in stock with quantity ranging from highest to lowest." << endl;
+			sortfunction(goodsarray, 3, size);
+		}
+		else if (option == 4)
+		{
+			counter += 1;
+			cout << "So this is all the products in stock with their days left before expiry, ranging from longest days to shortest days." << endl;
+			sortfunction(goodsarray, 4, size);
 		}
 	}
 	else
 	{
-		for (int i = 0; i < size; i++)
+		cout << "Please enter the batch number for this product you wanna check (if you wanna check all the batches of this product, enter EVERYTHING): " << endl;
+		string batchnum;
+		cin >> batchnum;
+		if (batchnum == EVERYTHING)
 		{
-			if (goodsarray[i].name == checkproduct && goodsarray[i].batch == batchstring)
+			for (int i = 0; i < size; i++)
 			{
-				counter += 1;
-				cout << "\nYou have " << checkproduct << " of batch " << goodsarray[i].batch << " with the current selling price of " << goodsarray[i].price << " in stock, the overall quantity of this batch is " << goodsarray[i].quantity << " . They'll have " << goodsarray[i].days_left << " day(s) before expire." << endl;
+				if (goodsarray[i].name == checkproduct)
+				{
+					counter += 1;
+					cout << goodsarray[i].name << " " << goodsarray[i].type << " " << goodsarray[i].price << " " << goodsarray[i].quantity << " " << goodsarray[i].days_left << " " << goodsarray[i].batch << endl;
+				}
+			}
+		}
+		else
+		{
+			for (int i = 0; i < size; i++)
+			{
+				if (goodsarray[i].name == checkproduct && goodsarray[i].batch == batchnum)
+				{
+					counter += 1;
+					cout << goodsarray[i].name << " " << goodsarray[i].type << " " << goodsarray[i].price << " " << goodsarray[i].quantity << " " << goodsarray[i].days_left << " " << goodsarray[i].batch << endl;
+				}
 			}
 		}
 	}
@@ -163,7 +298,7 @@ void viewproduct(Product goodsarray[], int size, string checkproduct, string bat
 	} 
 }
 
-
+/*A time series prediction, asks the user for historical datas and use them to predict further demand. Several options inside, weighted options from 1 month to 7 months historical data supported.*/
 void time_series_prediction(Product goodsproduct[], int n, string predictent, int size)
 {
 	cout << "Please enter the data of previous months you have in order: " << endl;
@@ -294,6 +429,142 @@ void time_series_prediction(Product goodsproduct[], int n, string predictent, in
 	return;
 }
 
+/*A more calibrated time series prediction with coefficient of disaster itself taken into consideration.*/
+void time_series_prediction_disaster(Product goodsproduct[], int n, string predictent, int size, int disaster_index, int length)
+{
+	cout << "Please enter the data of previous months you have in order: " << endl;
+	int sum = 0;
+	switch (n)
+	{
+	case 1:
+	{
+		int whatever;
+		cin >> whatever;
+		whatever = whatever * (1 + disaster_index * 0.1)*(1+length*0.1);
+		cout << "It is likely that the demand of " << predictent << " will be " << whatever << " in the next 30 days. " << endl;
+		int sum = 0;
+		for (int i = 0; i < size; i++)
+		{
+			if (goodsproduct[i].name == predictent && goodsproduct[i].days_left >= 30)
+			{
+				sum += goodsproduct[i].quantity;
+			}
+		}
+		if (sum <= whatever)
+		{
+			cout << "Since you only have " << sum << " " << predictent << "(s) left in your inventory that can remain unexpired after the coming 30 days." << endl;
+			cout << "You'd better purchase at least " << whatever - sum << " more " << predictent << "(s) with expire date at least 30 days or more, or else you'll face stock out!" << endl;
+		}
+		else
+		{
+			cout << "You have " << sum << " " << predictent << "(s) left in your inventory that can remain unexpired even after the coming 30 days, plenty left, there's no need to worry! " << endl;
+		}
+		break;
+	}
+	case 3:
+	{
+		double pre = 0;
+		int pred;
+		double d1, d2, d3;
+		cin >> d1;
+		cin >> d2;
+		cin >> d3;
+		pre = d1 * 0.15 + d2 * 0.35 + d3 * 0.5;
+		pre = pre * (1 + disaster_index * 0.1)*(1 + length * 0.1);
+		pred = ceil(pre);
+		int sum = 0;
+		for (int i = 0; i < size; i++)
+		{
+			if (goodsproduct[i].name == predictent && goodsproduct[i].days_left >= 30)
+			{
+				sum += goodsproduct[i].quantity;
+			}
+		}
+		cout << "It is likely that the demand of " << predictent << " will be " << pred << " in the next 30 days. " << endl;
+		if (sum <= pred)
+		{
+			cout << "Since you only have " << sum << " " << predictent << "(s) left in your inventory that can remain unexpired after the coming 30 days." << endl;
+			cout << "You'd better purchase at least " << pred - sum << " more " << predictent << "(s) with expire date at least 30 days or more, or else you'll face stock out!" << endl;
+		}
+		else
+		{
+			cout << "You have " << sum << " " << predictent << "(s) left in your inventory that can remain unexpired even after the coming 30 days, plenty left, there's no need to worry! " << endl;
+		}
+		break;
+	}
+	case 5:
+	{
+		double pre = 0;
+		int pred;
+		double d1, d2, d3, d4, d5;
+		cin >> d1;
+		cin >> d2;
+		cin >> d3;
+		cin >> d4;
+		cin >> d5;
+		pre = d1 * 0.05 + d2 * 0.15 + d3 * 0.2 + d4 * 0.25 + d5 * 0.35;
+		pre = pre * (1 + disaster_index * 0.1)*(1 + length * 0.1);
+		pred = ceil(pre);
+		int sum = 0;
+		for (int i = 0; i < size; i++)
+		{
+			if (goodsproduct[i].name == predictent && goodsproduct[i].days_left >= 30)
+			{
+				sum += goodsproduct[i].quantity;
+			}
+		}
+		cout << "It is likely that the demand of " << predictent << " will be " << pred << " in the next 30 days. " << endl;
+		if (sum <= pred)
+		{
+			cout << "Since you only have " << sum << " " << predictent << "(s) left in your inventory that can remain unexpired after the coming 30 days." << endl;
+			cout << "You'd better purchase at least " << pred - sum << " more " << predictent << "(s) with expire date at least 30 days or more, or else you'll face stock out!" << endl;
+		}
+		else
+		{
+			cout << "You have " << sum << " " << predictent << "(s) left in your inventory that can remain unexpired even after the coming 30 days, plenty left, there's no need to worry! " << endl;
+		}
+		break;
+	}
+	case 7:
+	{
+		double pre = 0;
+		int pred;
+		double d1, d2, d3, d4, d5, d6, d7;
+		cin >> d1;
+		cin >> d2;
+		cin >> d3;
+		cin >> d4;
+		cin >> d5;
+		cin >> d6;
+		cin >> d7;
+		pre = d1 * 0.05 + d2 * 0.08 + d3 * 0.1 + d4 * 0.15 + d5 * 0.17 + d6 * 0.2 + d7 * 0.25;
+		pre = pre * (1 + disaster_index * 0.1)*(1 + length * 0.1);
+		pred = ceil(pre);
+		int sum = 0;
+		for (int i = 0; i < size; i++)
+		{
+			if (goodsproduct[i].name == predictent && goodsproduct[i].days_left >= 30)
+			{
+				sum += goodsproduct[i].quantity;
+			}
+		}
+		cout << "It is likely that the demand of " << predictent << " will be " << pred << " in the next 30 days. " << endl;
+		if (sum <= pred)
+		{
+			cout << "Since you only have " << sum << " " << predictent << "(s) left in your inventory that can remain unexpired after the coming 30 days." << endl;
+			cout << "You'd better purchase at least " << pred - sum << " more " << predictent << "(s) with expire date at least 30 days or more, or else you'll face stock out!" << endl;
+		}
+		else
+		{
+			cout << "You have " << sum << " " << predictent << "(s) left in your inventory that can remain unexpired even after the coming 30 days, plenty left, there's no need to worry! " << endl;
+		}
+		break;
+	}
+	}
+	return;
+}
+
+/*A Linear Regression Prediction, using past historical datas to form an equation, thus achieving the porpose of predicting future data points.*/
 void linear_regression_prediction(Product goodsproduct[], int n, int premonth, string predictent, int size)
 {
 	double sumofx = 0;
@@ -349,27 +620,148 @@ void linear_regression_prediction(Product goodsproduct[], int n, int premonth, s
 	return;
 }
 
+/*A more calibrated Linear Regression Prediction, with coefficient of disaster itself taken into consideration. */
+void linear_regression_prediction_disaster(Product goodsproduct[], int n, int premonth, string predictent, int size, int disaster_index, int length)
+{
+	double sumofx = 0;
+	double sumofy = 0;
+	int arrayofx[n];
+	int arrayofy[n];
+	for (int i = 0; i < n; i++)
+	{
+		int month = 0, demand = 0;
+		cout << "Please enter the index of month for dataset " << i + 1 << " . " << endl;
+		cin >> month;
+		arrayofx[i] = month;
+		cout << "Please enter the corresponding demand of this month. " << endl;
+		cin >> demand;
+		arrayofy[i] = demand;
+		sumofx += month;
+		sumofy += demand;
+	}
+	sumofx = sumofx / n;
+	sumofy = sumofy / n;
+	double a, b, sumofa, sumofb, sumofab, sumofa2;
+	for (int i = 0; i < n; i++)
+	{
+		sumofa += arrayofx[i];
+		sumofb += arrayofy[i];
+		sumofab += arrayofx[i] * arrayofy[i];
+		sumofa2 += arrayofx[i] * arrayofx[i];
+	}
+	b = (n*sumofab - sumofa * sumofb) / (n*sumofa2 - sumofa * sumofa);
+	a = sumofy - b * sumofx;
+	double pre = 0;
+	int pred;
+	pre = a + b * premonth;
+	pre = pre * (1 + disaster_index * 0.1)*(1 + length * 0.1);
+	pred = ceil(pre);
+	int sum = 0;
+	for (int i = 0; i < size; i++)
+	{
+		if (goodsproduct[i].name == predictent && goodsproduct[i].days_left >= 30)
+		{
+			sum += goodsproduct[i].quantity;
+		}
+	}
+	cout << "It is likely that the demand of " << predictent << " will be " << pred << " in the next 30 days. " << endl;
+	if (sum <= pred)
+	{
+		cout << "Since you only have " << sum << " " << predictent << "(s) left in your inventory that can remain unexpired after the coming 30 days." << endl;
+		cout << "You'd better purchase at least " << pred - sum << " more " << predictent << "(s) with expire date at least 30 days or more, or else you'll face stock out!" << endl;
+	}
+	else
+	{
+		cout << "You have " << sum << " " << predictent << "(s) left in your inventory that can remain unexpired even after the coming 30 days, plenty left, there's no need to worry! " << endl;
+	}
+	return;
+}
 
+/*Forecast function's skeleton program. Mainly provides the user with an interface to interact with.*/
 void forecast(Product goodsproduct[], int size) // Leo
 {
 	string disaster;
 	string response, NO="NO";
+	cout << "This is a total list of your current inventory stored in the system, is there anything different from the actual inventory you'd like to update us with? (If nothing more, type NO) " << endl;
+	display(goodsproduct, size);
+	cin >> response;
+	while (response != NO)
+	{
+		string batch;
+		cout << "Which batch of " << response << " you'd like to update?" << endl;
+		cin >> batch;
+		updateproduct(goodsproduct, size, response, batch);
+		cout << "Anything more?" << endl;
+		cin >> response;
+	}
+	cout << "Which product you would like to make prediction on? " << endl;
+	string predictent;
+	cin >> predictent;
+	cout << "OK, in order to make prediction on " << predictent << ", we need some more information, stick with us. " << endl;
+	cout << "There are several prediction methods for you to choose from, each with different specifications on the input parameters." << endl;
+	cout << "These methods are as follows: " << endl;
+	cout << "0.I typoed my way here, quit. " << endl;
+	cout << "1.Time Series (Number of months to which you have data, every individual data)" << endl;
+	cout << "2.Linear Regression methods (Number of data sets you have, every individual data set in the format of (x,y) )" << endl;
+	cout << "If you're not sure what they stand for, enter 4 or 5 for each one of the method's definition respectively. " << endl;
+	int method;
+	cout << "Which one would you like to choose? " << endl;
+	cin >> method;
+	while (method != 0)
+	{
+		if (method == 1)
+		{
+			cout << "In time series prediction, you'll need to feed us with the following information: " << endl;
+			cout << "The number of continuous month on which you have data to, prior to this month (1, 3, 5 or 7. The greater the number is, the more accurate this prediction will likely be, in other words, the more data you have, the better. ): " << endl;
+			int n;
+			cin >> n;
+			time_series_prediction(goodsproduct, n, predictent, size);
+			break;
+		}
+		else if (method == 2)
+		{
+			cout << "In linear regression prediction, you'll need to feed us with the following information: " << endl;
+			cout << "The number of data sets you have, in the format of (month, quantity): " << endl;
+			int n;
+			cin >> n;
+			cout << "Which month's demand would you like for us to predict?" << endl;
+			int premonth;
+			cin >> premonth;
+			linear_regression_prediction(goodsproduct, n, premonth, predictent, size);
+			break;
+		}
+		else if (method == 4)
+		{
+			cout << "Time Series Prediction: Uses historical data assuming that what has occurred in the past will continue to occur in the future. " << endl;
+			cout << "So, which one would you like to choose? " << endl;
+			cin >> method;
+		}
+		else if (method == 5)
+		{
+			cout << "Try to fits a trend one degree equation to a series of historical data point, thus predicting the future data with exsiting trend. " << endl;
+			cout << "So, which one would you like to choose? " << endl;
+			cin >> method;
+		}
+	}
+
+	return;
+}
+
+/*A disaster version of forecast function, takes in two more user inputs, namely disaster index and length of the disaster.*/
+void forecastwithdisaster(Product goodsproduct[], int size) // Leo
+{
+	string disaster;
+	string response, NO = "NO";
 	cout << "Which natural disaster are you expecting to encounter? " << endl;
 	cin >> disaster;
+	cout << "What's the category of this time's " << disaster << "? (From 1 to 13)" << endl;
+	int disaster_index;
+	cin >> disaster_index;
+	cout << "How long will this time's " << disaster << " last?" << endl;
+	int length;
+	cin >> length;
 	cout << "This is a total list of your current inventory stored in the system, is there anything different from the actual inventory you'd like to update us with? (If nothing more, type NO) " << endl;
-	ifstream fin;
-	fin.open("Database.txt");
-	if (fin.fail())
-	{
-		cout << "Error in file opening!" << endl;
-		exit(1);
-	}
-	string line;
-	while (getline(fin,line))
-	{
-		cout << line << endl;
-	}
-	fin.close();
+	display(goodsproduct, size);
 	cin >> response;
 	while (response != NO)
 	{
@@ -401,7 +793,7 @@ void forecast(Product goodsproduct[], int size) // Leo
 			cout << "The number of continuous month on which you have data to, prior to this month (1, 3, 5 or 7. The greater the number is, the more accurate this prediction will likely be, in other words, the more data you have, the better. ): " << endl;
 			int n;
 			cin >> n;
-			time_series_prediction(goodsproduct, n, predictent, size);
+			time_series_prediction_disaster(goodsproduct, n, predictent, size, disaster_index, length);
 			break;
 		}
 		else if (method == 2)
@@ -413,7 +805,7 @@ void forecast(Product goodsproduct[], int size) // Leo
 			cout << "Which month's demand would you like for us to predict?" << endl;
 			int premonth;
 			cin >> premonth;
-			linear_regression_prediction(goodsproduct, n, premonth, predictent, size);
+			linear_regression_prediction_disaster(goodsproduct, n, premonth, predictent, size, disaster_index, length);
 			break;
 		}
 		else if (method == 4)
@@ -471,6 +863,7 @@ void reminder(Product *array, int num_p, int &notices, char demand) // Taha
 	}
 }
 
+/*To check how much money worth of products the user have inside this inventory database.*/
 void inventory_worth( Product goodsarray[], int size) // Leo
 {
 	string productname;
@@ -507,19 +900,7 @@ void inventory_worth( Product goodsarray[], int size) // Leo
 
 }
 
-/*function to dynamically double size of array.
-the inputs are current array pointer which is passed by reference so at the end this pointer is updated to the new bigger array and the current size of the array
-the new size will be 2*len*/
-void increase_size(Product *&current, int &len) {  //Taha
-	Product *ptr_to_delete_prev =  current;  //to free up this memory later
-	Product *biggerarray = new Product [2*len];  //creating the new bigger array
-	for(int i = 0; i < len; i++) {  //to copy all the elements from older to newer
-		biggerarray[i] = current[i];
-	}
-	current = biggerarray;  //updating the ptr of the older (smaller) array to the newer (bigger) array
-	delete [] ptr_to_delete_prev;  //releasing memory taken up by smaller array
-	len = len*2; //updating the size of our array by reference
-}
+
 
 /*This function will load the database from the database file when the program is run
 it takes a pointer to the aray, as well as size of the array and the number of products in it currently
@@ -602,7 +983,7 @@ int main() {
   load_array(database, size, num_products);  //initializing program from last saved version
   reminder(database, num_products, notices, 'I');  //I argument so we only get the number of notices, the reminders wont be posted
   choice = menu(notices);
-  while (choice != 7) {
+  while (choice != 8) {
 	cout << endl;
 	switch(choice) {
 	  case 1: {
@@ -610,7 +991,7 @@ int main() {
 		break;
 	  }
 	  case 2: {
-		addproduct(database, num_products);
+		addproduct(database, num_products, size);
 		break;
 	  }
 	  case 3: {
@@ -624,11 +1005,9 @@ int main() {
       }	  
 	  case 4: {
 		string check, batch;
-		cout << "Which product would you like to check on: ";
+		cout << "Which product would you like to check on (If you wanna check on everything, just type EVERYTHING): ";
 		cin >> check;
-		cout << "\nPlease enter the batch number for this product (if you wanna check all the batches of one product, enter No): ";
-		cin >> batch;
-		viewproduct(database, num_products, check, batch);
+		viewproduct(database, num_products, check);
 		break;
       }
 	  case 5: {
@@ -639,8 +1018,11 @@ int main() {
 	    inventory_worth(database, num_products);
 		break;
       }
+	  case 7: {
+		  forecastwithdisaster(database, num_products);
+	  }
 	  default: {
-	  	cout << "Please choose a number between 1 & 7" << endl;
+	  	cout << "Please choose a number between 1 & 8" << endl;
 	  	cin.clear();
 		cin.ignore(numeric_limits<streamsize>::max(), '\n');  //for max size of buffer or until newline
 	  }

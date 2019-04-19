@@ -21,4 +21,4 @@ Forecast month 8 with 7-month weighted moving average: 43(42.01) (0.05, 0.08, 0.
 
 
 Forecast month 4 with previous 3 months' data using linear regression: 46(45.3333333333)
-n=3, ¡Æxiyi=237, ¡Æxi=6, ¡Æyi=115, ¡Æx^2=14, b=3.5, a=31.3333333
+n=3, ¡Æxiyi=237, ¡Æxi=6, ¡Æyi=115, ¡Æx^2=14, b=3.5, a=31.33333
