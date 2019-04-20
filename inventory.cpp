@@ -8,7 +8,6 @@
 #include <stdio.h>
 #include <math.h>
 #include <algorithm>
-#include <bits/stdc++.h>
 
 using namespace std;
 
@@ -30,7 +29,7 @@ int menu(int reminders) { // Taha
   cout << endl;
   if(reminders != 0) {
   	if(reminders == 1) {
-  		cout << "##There is one important reminder you should look into##" << endl;
+  		cout << "##There is 1 important reminder you should look into##" << endl;
 	  }
 	else {
 		cout << "##There are  " << reminders << " important reminders you should look into##" << endl;
@@ -39,7 +38,7 @@ int menu(int reminders) { // Taha
   cout << "***********************************************************************" << endl;
   cout << "**************Leo & Taha's 82 Inventory Management System**************" << endl;
   cout << "******---             What would you like to do?             ---*******" << endl;
-  cout << "*******                  Choose an option from below            *******" << endl;
+  cout << "*******              Choose an option from below                *******" << endl;
   cout << "*1. Check reminders                                                   *" << endl;
   cout << "*2. Add a new product                                                 *" << endl;
   cout << "*3. Update Existing Product                                           *" << endl;
@@ -61,9 +60,10 @@ struct Product { // Taha
 	int days_left;
 	string batch;
 };
+
 /*function to dynamically double size of array.
 the inputs are current array pointer which is passed by reference so at the end this pointer is updated to the new bigger array and the current size of the array
-the new size will be 2*len*/
+the new size will be 2*len */
 void increase_size(Product *&current, int &len) {  //Taha
 	Product *ptr_to_delete_prev = current;  //to free up this memory later
 	Product *biggerarray = new Product[2 * len];  //creating the new bigger array
@@ -75,9 +75,6 @@ void increase_size(Product *&current, int &len) {  //Taha
 	len = len * 2; //updating the size of our array by reference
 }
 
-//this function will etiher return an integer (or update by reference) that keeps track of how many items there are in total in the function. Please incorporate a counter var in the function to keep track of how many products
-//there are in the array. i need this info.
-//i have added the number in the header. One will store the size of the array but the other stores how many items there are inside
 void addproduct( Product goodsarray[], int &size, int &size_of_array) // Leo
 {
 	if (size == size_of_array)
@@ -98,7 +95,7 @@ void addproduct( Product goodsarray[], int &size, int &size_of_array) // Leo
 	cin >> goodsarray[size].batch;
 	cout << "\nPlease hang on a minute " << goodsarray[size].name << " is being added";
 	int repeat = 0;
-	while (repeat != 3) {
+	while (repeat != 5) {
 		Sleep(350);
 		cout << ".";
 		repeat++;
@@ -137,7 +134,7 @@ void updateproduct(Product goodsarray[], int size, string updateproduct, string 
 	
 	cout << "\nPlease hang on a minute " << goodsarray[loc].name << " is being added";
 	int repeat = 0;
-	while (repeat != 3){
+	while (repeat != 5){
 		Sleep(350);
 		cout << ".";
 		repeat++;
@@ -145,7 +142,7 @@ void updateproduct(Product goodsarray[], int size, string updateproduct, string 
 	cout << "\nProduct Updated Successfully! ^_^ " << endl;
 }
 
-/* This function takes in the database and its size, to print out what's inside, straight printing using array itself instead of opening file to aviod the situation that newly added item entry can not be preinted*/
+/* This function takes in the database and its size, to print out the contents */
 void display(Product goodsproduct[], int size) // Leo
 {
 	for (int i = 0; i < size; i++)
@@ -235,7 +232,7 @@ void viewproduct(Product goodsarray[], int size, string checkproduct) // Leo
 			cout << "Which type of product would you like to check on?" << endl;
 			string product_type;
 			cin >> product_type;
-			cout << "So this is all the " << product_type << " products that's currently in stock." << endl;
+			cout << "So these are all the " << product_type << " products that are currently in stock." << endl;
 			for (int i = 0; i < size; i++)
 			{
 				if (goodsarray[i].type == product_type)
@@ -248,25 +245,25 @@ void viewproduct(Product goodsarray[], int size, string checkproduct) // Leo
 		else if (option == 2)
 		{
 			counter += 1;
-			cout << "So this is all the products in stock with prices ranging from highest to lowest." << endl;
+			cout << "So these are all the products in stock with prices ranging from highest to lowest." << endl;
 			sortfunction(goodsarray, 2, size);
 		}
 		else if (option == 3)
 		{
 			counter += 1;
-			cout << "So this is all the products in stock with quantity ranging from highest to lowest." << endl;
+			cout << "So these are all the products in stock with quantity ranging from highest to lowest." << endl;
 			sortfunction(goodsarray, 3, size);
 		}
 		else if (option == 4)
 		{
 			counter += 1;
-			cout << "So this is all the products in stock with their days left before expiry, ranging from longest days to shortest days." << endl;
+			cout << "So these are all the products in stock with their days left before expiry, from most to least Number of Days." << endl;
 			sortfunction(goodsarray, 4, size);
 		}
 	}
 	else
 	{
-		cout << "Please enter the batch number for this product you wanna check (if you wanna check all the batches of this product, enter EVERYTHING): " << endl;
+		cout << "Please enter the batch number for this product you want to check (if you wanna check all the batches of this product, enter EVERYTHING): " << endl;
 		string batchnum;
 		cin >> batchnum;
 		if (batchnum == EVERYTHING)
@@ -294,7 +291,7 @@ void viewproduct(Product goodsarray[], int size, string checkproduct) // Leo
 	}
 	if (counter == 0)
 	{
-		cout << "\nSorry, the product you are looking for does not exist in the database, you might wanna input again to prevent possible typos if you're sure the product exist. :)" << endl;
+		cout << "\nSorry, the product you are looking for does not exist in the database, you might want to input again to prevent possible typos if you're sure the product exists. :)" << endl;
 	} 
 }
 
@@ -321,7 +318,7 @@ void time_series_prediction(Product goodsproduct[], int n, string predictent, in
 			if (sum <= whatever)
 			{
 				cout << "Since you only have " << sum << " " << predictent << "(s) left in your inventory that can remain unexpired after the coming 30 days." << endl;
-				cout << "You'd better purchase at least " << whatever - sum << " more " << predictent << "(s) with expire date at least 30 days or more, or else you'll face stock out!" << endl;
+				cout << "You better purchase at least " << whatever - sum << " more " << predictent << "(s) with an expiry date of at least 30 days or more, or else you'll face stock out!" << endl;
 			}
 			else
 			{
@@ -351,7 +348,7 @@ void time_series_prediction(Product goodsproduct[], int n, string predictent, in
 			if (sum <= pred)
 			{
 				cout << "Since you only have " << sum << " " << predictent << "(s) left in your inventory that can remain unexpired after the coming 30 days." << endl;
-				cout << "You'd better purchase at least " << pred - sum << " more " << predictent << "(s) with expire date at least 30 days or more, or else you'll face stock out!" << endl;
+				cout << "You better purchase at least " << pred - sum << " more " << predictent << "(s) with expire date at least 30 days or more, or else you'll face stock out!" << endl;
 			}
 			else
 			{
@@ -383,7 +380,7 @@ void time_series_prediction(Product goodsproduct[], int n, string predictent, in
 			if (sum <= pred)
 			{
 				cout << "Since you only have " << sum << " " << predictent << "(s) left in your inventory that can remain unexpired after the coming 30 days." << endl;
-				cout << "You'd better purchase at least " << pred - sum << " more " << predictent << "(s) with expire date at least 30 days or more, or else you'll face stock out!" << endl;
+				cout << "You better purchase at least " << pred - sum << " more " << predictent << "(s) with expire date at least 30 days or more, or else you'll face stock out!" << endl;
 			}
 			else
 			{
@@ -699,11 +696,10 @@ void forecast(Product goodsproduct[], int size) // Leo
 	cin >> predictent;
 	cout << "OK, in order to make prediction on " << predictent << ", we need some more information, stick with us. " << endl;
 	cout << "There are several prediction methods for you to choose from, each with different specifications on the input parameters." << endl;
-	cout << "These methods are as follows: " << endl;
-	cout << "0.I typoed my way here, quit. " << endl;
+	cout << "These methods are as follows: " << endl << endl;
 	cout << "1.Time Series (Number of months to which you have data, every individual data)" << endl;
 	cout << "2.Linear Regression methods (Number of data sets you have, every individual data set in the format of (x,y) )" << endl;
-	cout << "If you're not sure what they stand for, enter 4 or 5 for each one of the method's definition respectively. " << endl;
+	cout << "If you're not sure what they stand for, enter 4 or 5 for each one of the method's definition respectively. " << endl << endl;
 	int method;
 	cout << "Which one would you like to choose? " << endl;
 	cin >> method;
@@ -750,10 +746,8 @@ void forecast(Product goodsproduct[], int size) // Leo
 /*A disaster version of forecast function, takes in two more user inputs, namely disaster index and length of the disaster.*/
 void forecastwithdisaster(Product goodsproduct[], int size) // Leo
 {
-	string disaster;
+	string disaster = "Typhoon";
 	string response, NO = "NO";
-	cout << "Which natural disaster are you expecting to encounter? " << endl;
-	cin >> disaster;
 	cout << "What's the category of this time's " << disaster << "? (From 1 to 13)" << endl;
 	int disaster_index;
 	cin >> disaster_index;
@@ -777,10 +771,9 @@ void forecastwithdisaster(Product goodsproduct[], int size) // Leo
 	cin >> predictent;
 	cout << "OK, in order to make prediction on " << predictent << " as to encounter the coming of " << disaster << ", we need some more information, stick with us. " << endl;
 	cout << "There are several prediction methods for you to choose from, each with different specifications on the input parameters." << endl;
-	cout << "These methods are as follows: " << endl;
-	cout << "0.I typoed my way here, quit. " << endl;
+	cout << "These methods are as follows: " << endl <<endl;
 	cout << "1.Time Series (Number of months to which you have data, every individual data)" << endl;
-	cout << "2.Linear Regression methods (Number of data sets you have, every individual data set in the format of (x,y) )" << endl;
+	cout << "2.Linear Regression methods (Number of data sets you have, every individual data set in the format of (x,y) )" << endl << endl;
 	cout << "If you're not sure what they stand for, enter 4 or 5 for each one of the method's definition respectively. " << endl;
 	int method;
 	cout << "Which one would you like to choose? " << endl;
@@ -821,7 +814,6 @@ void forecastwithdisaster(Product goodsproduct[], int size) // Leo
 			cin >> method;
 		}
 	}
-
 	return;
 }
 
@@ -879,7 +871,7 @@ void inventory_worth( Product goodsarray[], int size) // Leo
 		}
 		if (sum >= 500000)
 		{
-			cout << "You have $" << sum << " worth of products in your warehouse! What a richass!" << endl;
+			cout << "You have $" << sum << " worth of products in your warehouse! You're Loaded!" << endl;
 		}
 		else
 		{
@@ -895,7 +887,7 @@ void inventory_worth( Product goodsarray[], int size) // Leo
 				sum += goodsarray[i].price * goodsarray[i].quantity;
 			}
 		}
-		cout << "You have " << sum << "$ worth of " << productname << " in your warehouse!" << endl;
+		cout << "You have $" << sum << " worth of " << productname << " in your warehouse!" << endl;
 	}
 
 }
@@ -946,11 +938,11 @@ void load_array(Product *array, int sizeofarray, int &num_products) // Taha
 		idx++;
 		num_products++;
 	}
-	if(num_products == 0 || num_products > 1) {
-		cout << num_products << " Products loaded successfully!" << endl;
+	if(num_products == 1) {
+		cout << num_products << " Product loaded successfully!" << endl;
 	}
 	else {
-		cout << num_products << " Product loaded successfully!" << endl;
+		cout << num_products << " Products loaded successfully!" << endl;
 	}
 	fin.close();
 }
@@ -976,7 +968,7 @@ void write_array(Product *save_myarray, int total_products) {
 	}
 	fout.close();
 }
-//
+
 int main() {
   int choice, size = 10, num_products = 0, notices = 0;
   Product database[10]; //struct array to store all our products
