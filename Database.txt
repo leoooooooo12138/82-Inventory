@@ -1,1 +1,6 @@
-
+Drinks Packaged 5 15 20 D1
+Chicken Perishable 15 20 1 D2
+Chips Packaged 5 200 1500 C1
+Drinks Packaged 15 15 15 D9
+Drinks Packaged 15 30000 10 D8
+Drinks Packaged 300 600 50 A3
