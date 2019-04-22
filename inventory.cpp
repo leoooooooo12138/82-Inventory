@@ -75,6 +75,8 @@ void increase_size(Product *&current, int &len) {  //Taha
 	len = len * 2; //updating the size of our array by reference
 }
 
+/*Function to add a product into the database. Take parameters of the original database, num of products inside and the size of the array
+After asking for relevant info from the user, Adds the product into the database*/
 void addproduct( Product goodsarray[], int &size, int &size_of_array) // Leo
 {
 	if (size == size_of_array)
@@ -85,9 +87,9 @@ void addproduct( Product goodsarray[], int &size, int &size_of_array) // Leo
 	cin >> goodsarray[size].name;
 	cout << "Please enter the product type: " << endl;
 	cin >> goodsarray[size].type;
-	cout << "Please enter " << goodsarray[size].name << "'s unit price (if it is liquid, per liter; if it is meat product, per kilogram): " << endl;
+	cout << "Please enter " << goodsarray[size].name << "'s price : " << endl;
 	cin >> goodsarray[size].price;
-	cout << "How much " << goodsarray[size].name << " you would like to add this time? " << endl;
+	cout << "What quantity of " << goodsarray[size].name << " would you like to add this time? " << endl;
 	cin >> goodsarray[size].quantity;
 	cout << "How many days can " << goodsarray[size].name << " last before it will expire? " << endl;
 	cin >> goodsarray[size].days_left;
@@ -95,7 +97,7 @@ void addproduct( Product goodsarray[], int &size, int &size_of_array) // Leo
 	cin >> goodsarray[size].batch;
 	cout << "\nPlease hang on a minute " << goodsarray[size].name << " is being added";
 	int repeat = 0;
-	while (repeat != 5) {
+	while (repeat != 6) {
 		Sleep(350);
 		cout << ".";
 		repeat++;
@@ -152,7 +154,7 @@ void display(Product goodsproduct[], int size) // Leo
 	return;
 }
 
-/*Simple Bubble Sort, to sort the cloned database, specified for each of the 3 filters which can be quantified in the Product. Takes in database, its size, and an option index to indicate specific route to commence.*/
+/*Simple Bubble Sort, to sort the cloned database, specified for each of the filters which can be quantified in the Product. Takes in database, its size, and an option index to indicate specific route to commence.*/
 void sortfunction(Product goodsarray[], int option, int size)
 {
 	Product sortedarray[size];
@@ -211,7 +213,8 @@ void sortfunction(Product goodsarray[], int option, int size)
 	display(sortedarray, size);
 }
 
-/*The main sorting body of the rest of the unquantifiable filters in Product, and the skeleton program for view product itself, which supports the inspection of the whole data base, with filters featured.*/
+/*Function to show the user the sorted products depending on the different options as chosen by the user
+it takes the database and num of products as parameters. Then prompts the user, asking how to sort the data, and displays the sorted products on the output window*/
 void viewproduct(Product goodsarray[], int size) // Leo
 {
 	cout << "How would you like to view your Products?" << endl;
@@ -233,23 +236,21 @@ void viewproduct(Product goodsarray[], int size) // Leo
 		string product_batch;
 		cin >> product_batch;
 		//finding product
-		for (int i = 0; i < size; i++)
+		for (int i = 0; i < size; ++i)
 		{
 			if ((goodsarray[i].name == product_name) && (goodsarray[i].batch == product_batch)) 
 			{
 				cout << "These are the details of your request:" << endl;
-				cout << "Name-> " << goodsarray[i].name << endl;
-				cout << "Batch-> " << goodsarray[i].batch << endl;
-				cout << "Type-> " << goodsarray[i].type << endl;
-				cout << "Price-> " << goodsarray[i].price << endl;
-				cout << "Quantity-> " << goodsarray[i].quantity << endl;
-				cout << "Expiry Days-> " << goodsarray[i].days_left << endl;
+				cout << "Name:" << goodsarray[i].name << endl;
+				cout << "Batch:" << goodsarray[i].batch << endl;
+				cout << "Type:" << goodsarray[i].type << endl;
+				cout << "Price:" << goodsarray[i].price << endl;
+				cout << "Quantity:" << goodsarray[i].quantity << endl;
+				cout << "Expiry Days:" << goodsarray[i].days_left << endl;
 				break;
 			}
-			else
-			{
-				++i;
-				if(i == size) 
+			else {
+				if(i+1 == size) 
 				{
 					cout << "Sorry your product does not exist. Please search again if you are sure the product exists, perhaps there was a typo." << endl;
 				}
