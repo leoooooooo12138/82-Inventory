@@ -212,22 +212,51 @@ void sortfunction(Product goodsarray[], int option, int size)
 }
 
 /*The main sorting body of the rest of the unquantifiable filters in Product, and the skeleton program for view product itself, which supports the inspection of the whole data base, with filters featured.*/
-void viewproduct(Product goodsarray[], int size, string checkproduct) // Leo
+void viewproduct(Product goodsarray[], int size) // Leo
 {
-	int counter = 0;
-	string No = "No";
-	string EVERYTHING = "EVERYTHING";
-	if (checkproduct == EVERYTHING)
+	cout << "How would you like to view your Products?" << endl;
+	cout << "1. Specific Product" << endl;
+	cout << "2. By Type" << endl;
+	cout << "3. By Price" << endl;
+	cout << "4. By Quantity" << endl;
+	cout << "5. By Expiry days" << endl;
+	cout << "So...which is it going to be?" << endl;
+	int option;
+	cin >> option;
+	
+	if (option == 1)
 	{
-		cout << "These are some of the filters for you to choose from." << endl;
-		cout << "1. Product Type." << endl;
-		cout << "2. Product Selling Price." << endl;
-		cout << "3. Product Quantity in Stock." << endl;
-		cout << "4. Product Days Left Before Expiry." << endl;
-		cout << "So, which is it gonna be?" << endl;
-		int option;
-		cin >> option;
-		if (option == 1)
+		cout << "Which product would you like to check?" << endl;
+		string product_name;
+		cin >> product_name;
+		cout << "What is the Batch Number for this product?" << endl;
+		string product_batch;
+		cin >> product_batch;
+		//finding product
+		for (int i = 0; i < size; i++)
+		{
+			if ((goodsarray[i].name == product_name) && (goodsarray[i].batch == product_batch)) 
+			{
+				cout << "These are the details of your request:" << endl;
+				cout << "Name-> " << goodsarray[i].name << endl;
+				cout << "Batch-> " << goodsarray[i].batch << endl;
+				cout << "Type-> " << goodsarray[i].type << endl;
+				cout << "Price-> " << goodsarray[i].price << endl;
+				cout << "Quantity-> " << goodsarray[i].quantity << endl;
+				cout << "Expiry Days-> " << goodsarray[i].days_left << endl;
+				break;
+			}
+			else
+			{
+				++i;
+				if(i == size) 
+				{
+					cout << "Sorry your product does not exist. Please search again if you are sure the product exists, perhaps there was a typo." << endl;
+				}
+			}
+		}
+	}
+	else if (option == 2)
 		{
 			cout << "Which type of product would you like to check on?" << endl;
 			string product_type;
@@ -237,62 +266,25 @@ void viewproduct(Product goodsarray[], int size, string checkproduct) // Leo
 			{
 				if (goodsarray[i].type == product_type)
 				{
-					counter += 1;
 					cout << goodsarray[i].name << " " << goodsarray[i].type << " " << goodsarray[i].price << " " << goodsarray[i].quantity << " " << goodsarray[i].days_left << " " << goodsarray[i].batch << endl;
 				}
 			}
 		}
-		else if (option == 2)
-		{
-			counter += 1;
-			cout << "So these are all the products in stock with prices ranging from highest to lowest." << endl;
-			sortfunction(goodsarray, 2, size);
-		}
-		else if (option == 3)
-		{
-			counter += 1;
-			cout << "So these are all the products in stock with quantity ranging from highest to lowest." << endl;
-			sortfunction(goodsarray, 3, size);
-		}
-		else if (option == 4)
-		{
-			counter += 1;
-			cout << "So these are all the products in stock with their days left before expiry, from the Most to Least Number of Days." << endl;
-			sortfunction(goodsarray, 4, size);
-		}
-	}
-	else
+	else if (option == 3)
 	{
-		cout << "Please enter the batch number for this product you want to check (if you wish check all the batches of this product, enter EVERYTHING): " << endl;
-		string batchnum;
-		cin >> batchnum;
-		if (batchnum == EVERYTHING)
-		{
-			for (int i = 0; i < size; i++)
-			{
-				if (goodsarray[i].name == checkproduct)
-				{
-					counter += 1;
-					cout << goodsarray[i].name << " " << goodsarray[i].type << " " << goodsarray[i].price << " " << goodsarray[i].quantity << " " << goodsarray[i].days_left << " " << goodsarray[i].batch << endl;
-				}
-			}
-		}
-		else
-		{
-			for (int i = 0; i < size; i++)
-			{
-				if (goodsarray[i].name == checkproduct && goodsarray[i].batch == batchnum)
-				{
-					counter += 1;
-					cout << goodsarray[i].name << " " << goodsarray[i].type << " " << goodsarray[i].price << " " << goodsarray[i].quantity << " " << goodsarray[i].days_left << " " << goodsarray[i].batch << endl;
-				}
-			}
-		}
+		cout << "So these are all the products in stock with prices ranging from highest to lowest." << endl;
+		sortfunction(goodsarray, 2, size);
 	}
-	if (counter == 0)
+	else if (option == 4)
 	{
-		cout << "\nSorry, the product you are looking for does not exist in the database, you might want to input again to prevent possible typos if you're sure the product exists. :)" << endl;
-	} 
+		cout << "So these are all the products in stock with quantity ranging from highest to lowest." << endl;
+		sortfunction(goodsarray, 3, size);
+	}
+	else if (option == 5)
+	{
+		cout << "So these are all the products in stock with their days left before expiry, from the Most to Least Number of Days." << endl;
+		sortfunction(goodsarray, 4, size);
+	}
 }
 
 /*A time series prediction, asks the user for historical datas and use them to predict further demand. Several options inside, weighted options from 1 month to 7 months historical data supported.*/
@@ -996,10 +988,7 @@ int main() {
 		break;
       }	  
 	  case 4: {
-		string check, batch;
-		cout << "Which product would you like to check on (If you wanna check on everything, just type EVERYTHING): ";
-		cin >> check;
-		viewproduct(database, num_products, check);
+		viewproduct(database, num_products);
 		break;
       }
 	  case 5: {
