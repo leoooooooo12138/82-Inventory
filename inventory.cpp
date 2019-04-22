@@ -87,11 +87,11 @@ void addproduct( Product goodsarray[], int &size, int &size_of_array) // Leo
 	cin >> goodsarray[size].type;
 	cout << "Please enter " << goodsarray[size].name << "'s unit price (if it is liquid, per liter; if it is meat product, per kilogram): " << endl;
 	cin >> goodsarray[size].price;
-	cout << "How much " << goodsarray[size].name << " you would like to add this time? : " << endl;
+	cout << "How much " << goodsarray[size].name << " you would like to add this time? " << endl;
 	cin >> goodsarray[size].quantity;
-	cout << "How many days can " << goodsarray[size].name << " last till it comes expired? : " << endl;
+	cout << "How many days can " << goodsarray[size].name << " last before it will expire? " << endl;
 	cin >> goodsarray[size].days_left;
-	cout << "Please enter the batch number of this batch of " << goodsarray[size].name << " : " << endl;
+	cout << "Please enter the batch number for this batch of " << goodsarray[size].name << ": " << endl;
 	cin >> goodsarray[size].batch;
 	cout << "\nPlease hang on a minute " << goodsarray[size].name << " is being added";
 	int repeat = 0;
@@ -257,13 +257,13 @@ void viewproduct(Product goodsarray[], int size, string checkproduct) // Leo
 		else if (option == 4)
 		{
 			counter += 1;
-			cout << "So these are all the products in stock with their days left before expiry, from most to least Number of Days." << endl;
+			cout << "So these are all the products in stock with their days left before expiry, from the Most to Least Number of Days." << endl;
 			sortfunction(goodsarray, 4, size);
 		}
 	}
 	else
 	{
-		cout << "Please enter the batch number for this product you want to check (if you wanna check all the batches of this product, enter EVERYTHING): " << endl;
+		cout << "Please enter the batch number for this product you want to check (if you wish check all the batches of this product, enter EVERYTHING): " << endl;
 		string batchnum;
 		cin >> batchnum;
 		if (batchnum == EVERYTHING)
