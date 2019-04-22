@@ -134,7 +134,7 @@ void updateproduct(Product goodsarray[], int size, string updateproduct, string 
 	cout << "\nEnter the new Expiry date: ";
 	cin >> goodsarray[loc].days_left;
 	
-	cout << "\nPlease hang on a minute " << goodsarray[loc].name << " is being added";
+	cout << "\nPlease hang on a minute " << goodsarray[loc].name << " is being Updated";
 	int repeat = 0;
 	while (repeat != 5){
 		Sleep(350);
@@ -236,7 +236,7 @@ void viewproduct(Product goodsarray[], int size) // Leo
 {
 	cout << "How would you like to view your Products?" << endl;
 	cout << "1. Specific Product" << endl;
-	cout << "2. By Type" << endl;
+	cout << "2. By Type (Lexicographically)" << endl;
 	cout << "3. By Price" << endl;
 	cout << "4. By Quantity" << endl;
 	cout << "5. By Expiry days" << endl;
