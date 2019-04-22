@@ -20,7 +20,7 @@ std::string to_string(int i) {
 }
 /*this function takes an int argument which is the number of different reminders
 if the reminders are 0, then it simply displays the menu
-otherwise it will also display that there are n number of reminders
+otherwise it will also display that there are n number of relinearminders
 the input of this function is the action that the user will choose to do
 the function returns the int that specifies what action the user wants to do*/
 int menu(int reminders) { // Taha
@@ -643,7 +643,7 @@ void linear_regression_prediction(Product goodsproduct[], int n, int premonth, s
 	cout << "It is likely that the demand of " << predictent << " will be " << pred << " in the next 30 days. " << endl;
 	if (sum <= pred)
 	{
-		cout << "Since you only have " << sum << " " << predictent << "(s) left in your inventory that can remain unexpired after the" << premonth << "." << endl;
+		cout << "Since you only have " << sum << " " << predictent << "(s) left in your inventory that can remain unexpired after the " << premonth << " month." << endl;
 		cout << "You'd better purchase at least " << pred - sum << " more " << predictent << "(s) with an expiry date that combined, can last you through the next 30 days, or else you'll face stock out!" << endl;
 	}
 	else
@@ -727,14 +727,14 @@ void forecast(Product goodsproduct[], int size) // Leo
 		cout << "Anything more?(Type NO if none, otherwise, the product name for further changes)" << endl;
 		cin >> response;
 	}
-	cout << "Which product would you like to make a prediction on? " << endl;
+	cout << "Which product would you like to get a prediction for? " << endl;
 	string predictent;
 	cin >> predictent;
 	cout << "OK, in order to make prediction on " << predictent << ", we need some more information, stick with us. " << endl;
 	cout << "There are several prediction methods for you to choose from, each with different specifications on the input parameters." << endl;
 	cout << "These methods are as follows: " << endl << endl;
-	cout << "1.Time Series (Number of months to which you have data, every individual data)" << endl;
-	cout << "2.Linear Regression methods (Number of data sets you have, every individual data set in the format of (x,y))" << endl;
+	cout << "1.Time Series (Number of months for which you have data)" << endl;
+	cout << "2.Linear Regression Method (Number of data sets you have, i.e every individual data set in the format of (x,y))" << endl;
 	cout << "If you're not sure what they stand for, enter 4 or 5 for each one of the method's definition respectively. " << endl << endl;
 	int method;
 	cout << "Which one would you like to choose? " << endl;
@@ -743,8 +743,8 @@ void forecast(Product goodsproduct[], int size) // Leo
 	{
 		if (method == 1)
 		{
-			cout << "In time series prediction, you'll need to feed us with the following information: " << endl;
-			cout << "The number of continuous month on which you have data to, prior to this month (1, 3, 5 or 7. The greater the number is, the more accurate this prediction will likely be, in other words, the more data you have, the better.): " << endl;
+			cout << "In time series prediction, you'll need to provide us with the following information: " << endl;
+			cout << "The number of continuous month on which you have data to, prior to this month (1, 3, 5 or 7. The greater the number is, the more accurate this prediction will likely be, in other words, the more data you have, the better): " << endl;
 			int n;
 			cin >> n;
 			time_series_prediction(goodsproduct, n, predictent, size);
@@ -752,7 +752,7 @@ void forecast(Product goodsproduct[], int size) // Leo
 		}
 		else if (method == 2)
 		{
-			cout << "In linear regression prediction, you'll need to feed us with the following information: " << endl;
+			cout << "In linear regression prediction, you'll need to provide the following information: " << endl;
 			cout << "The number of data sets you have, in the format of (month, quantity): " << endl;
 			int n;
 			cin >> n;
@@ -770,7 +770,7 @@ void forecast(Product goodsproduct[], int size) // Leo
 		}
 		else if (method == 5)
 		{
-			cout << "Try to fits a trend one degree equation to a series of historical data point, thus predicting the future data with exsiting trend. " << endl;
+			cout << "Linear Regression tries to fit a one degree equation to a series of historical data point, thus predicting the future data with exsiting trend. " << endl;
 			cout << "So, which one would you like to choose? " << endl;
 			cin >> method;
 		}
@@ -806,8 +806,8 @@ void forecastwithdisaster(Product goodsproduct[], int size) // Leo
 	string predictent;
 	cin >> predictent;
 	cout << "Which prediction method would you like to employ?: " <<endl;
-	cout << "1.Time Series (Number of months to which you have data, every individual data)" << endl;
-	cout << "2.Linear Regression methods (Number of data sets you have, every individual data set in the format of (x,y))" << endl << endl;
+	cout << "1.Time Series (Number of months for which you have data)" << endl;
+	cout << "2.Linear Regression Method (Number of data sets you have, i.e every individual data set in the format of (x,y))" << endl;
 	cout << "If you're not sure what they stand for, enter 4 or 5 for each one of the method's definition respectively. " << endl;
 	int method;
 	cin >> method;
@@ -816,7 +816,7 @@ void forecastwithdisaster(Product goodsproduct[], int size) // Leo
 		if (method == 1)
 		{
 			cout << "In time series prediction, you'll need to feed us with the following information: " << endl;
-			cout << "The number of continuous month on which you have data to, prior to this month (1, 3, 5 or 7): " << endl;
+			cout << "The number of continuous month on which you have data to, prior to this month (1, 3, 5 or 7)" << endl;
 			int n;
 			cin >> n;
 			time_series_prediction_disaster(goodsproduct, n, predictent, size, disaster_index, length);
@@ -824,8 +824,8 @@ void forecastwithdisaster(Product goodsproduct[], int size) // Leo
 		}
 		else if (method == 2)
 		{
-			cout << "In linear regression prediction, you'll need to feed us with the following information: " << endl;
-			cout << "The number of data sets you have, in the format of (month, quantity): " << endl;
+			cout << "In linear regression prediction, you'll need to provide the following information: " << endl;
+			cout << "The number of data sets you have (in the format of (month, quantity))" << endl;
 			int n;
 			cin >> n;
 			cout << "Which month will the Typhoon arrive?" << endl;

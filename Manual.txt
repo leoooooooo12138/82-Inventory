@@ -11,26 +11,43 @@ quantity is an integer
 daysleftforexpiry is an integer
 batch is a string without a space
 e.g 
-Mangoes Perishables 5 1000 3 D1
+Mango Perishables 5 1000 3 D1
+
+Assumptions: 
 It is assumed that there is always atleast 1 product in the database and It is not completely empty.
+Duplicate products will not be treated
+For predictions in option 5, 6 & 7, It is assumed there is some sort of data to make the predictions. So incase of option 5, atleast one month's data is present on demand 
+and for typhoon prediction, it is known how long the typhoon will rage for and what the intensity will be.
+
+
 
 The user will use an interface to interact with the program, with 8 options provided. It can handle incorrect input case, such as a string input instead of a number.
+If there are some important reminders, a display message on top of the menu will be displayed grabbing the users attention
+Otherwise just the menu will be displayed 
+The different options can do as follows:
+
+Features:
 1. Check reminder: 
 There will be a reminder for expiry if "Perishables" are about to expire in 1 day.
 There will be a reminder for expiry if "Non Perishables" are about to expire within 1 week.
 There will be a reminder for excess inventory if there are more than 10000 units of a particular Product.
 If there are no reminders, an output message will be displayed stating as such.
 
-2. Add a new product: To add a new entry into the database. Detail by detail the user need to input everything manually.
+2. Add a new product: To add a new entry into the database. The system will prompt the user for the information from name to batch number, then add it to the database.
 
-3. Update existing Product: It lets you update any of the existing products. It asks for which product to update and the batch number to locate the specific product.
-In case the product does not exist then an output message will be displayed, otherwise it will prompt the user for the new price, quantity, and expiry date to update the particular product.
+3. Update existing Product: It lets you update any of the existing products. It asks for which product to update and the batch number in order to locate the specific product.
+In case the product does not exist then an output message will be displayed, otherwise it will prompt the user for the new price, quantity, and expiry date to update the product.
 
-4. View Products: You can check the specific information on products, and inspect the whole database using filters such as batch number, quantity, days left, etc.
+4. View Products: You can check the specific information on products, such as Searching for specific products or inspecting the whole database using filters such as sorting by type, price, quantity, expiry, etc.
 
-5. Inventory checking and predicting: Mainly designed for marketing porpose, has some pretty sophsticated embedded function to provide the user with more options and possibly more accurate prediction depends on how much data the user has.
+5. Inventory checking and predicting: The system will Make predictions of demand and compare with existing stock levels to check for shortages. This option will show the entire current database and 
+give the user a choice to change any of the existing products as deemed necessary before the system makes predictions. Since the system requires some previous data in order to make the predictions
+it will ask the user which prediction mechanism to use as well as explain what the difference is, and what kind of data each method necessitates. The user can choose a prediction mechanism based on his/her liking
+and may check the definition of the two methods incase of further clarification (press 4 or 5 when the program asks). For linear time series prediction the numbers of months need to be provided which the user has data for, the the relevant demands in those months.
+For linear regression, for each data entry two data points are needed i.e Month number and demand and then the system can predict for the demand for a particualar month as specified by the user
+Incase the products of that type expire before the end of the month, or there are less suitable units available then the demand, the user will be told.
 
-6. Inventory worth: You can check how much money worth of products are in your inventory, you can even check it by products.
+6. Inventory worth: You can check how much worth of products are in the inventory. This can be done either by a particular product name, or by typing EVERYTHING, the entire worth of the inventory can be gauged.
 
 7. Inventory checking and predicting in events of natural disaster: An inventory prediction system taken into consideration the natural disaster situation, ask for some indexes to make more accurate prediction for the user.
 
