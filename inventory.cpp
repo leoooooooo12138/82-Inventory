@@ -89,9 +89,9 @@ void addproduct( Product goodsarray[], int &size, int &size_of_array) // Leo
 	cin >> goodsarray[size].type;
 	cout << "Please enter " << goodsarray[size].name << "'s price : " << endl;
 	cin >> goodsarray[size].price;
-	cout << "What quantity of " << goodsarray[size].name << " would you like to add this time? " << endl;
+	cout << "What quantity of " << goodsarray[size].name << "(s) would you like to add this time? " << endl;
 	cin >> goodsarray[size].quantity;
-	cout << "How many days can " << goodsarray[size].name << " last before it will expire? " << endl;
+	cout << "How many days can " << goodsarray[size].name << " last before it expires? " << endl;
 	cin >> goodsarray[size].days_left;
 	cout << "Please enter the batch number for this batch of " << goodsarray[size].name << ": " << endl;
 	cin >> goodsarray[size].batch;
@@ -354,7 +354,7 @@ void time_series_prediction(Product goodsproduct[], int n, string predictent, in
 			if (sum <= whatever)
 			{
 				cout << "Since you only have " << sum << " " << predictent << "(s) left in your inventory that can remain unexpired after the coming 30 days." << endl;
-				cout << "You better purchase at least " << whatever - sum << " more " << predictent << "(s) with an expiry date of at least 30 days or more, or else you'll face stock out!" << endl;
+				cout << "You better purchase at least " << whatever - sum << " more " << predictent << "(s) with an expiry date that combined, can last you through the next 30 days, or else you'll face stock out!" << endl;
 			}
 			else
 			{
@@ -384,7 +384,7 @@ void time_series_prediction(Product goodsproduct[], int n, string predictent, in
 			if (sum <= pred)
 			{
 				cout << "Since you only have " << sum << " " << predictent << "(s) left in your inventory that can remain unexpired after the coming 30 days." << endl;
-				cout << "You better purchase at least " << pred - sum << " more " << predictent << "(s) with expire date at least 30 days or more, or else you'll face stock out!" << endl;
+				cout << "You better purchase at least " << pred - sum << " more " << predictent << "(s) with an expiry date that combined, can last you through the next 30 days, or else you'll face stock out!" << endl;
 			}
 			else
 			{
@@ -416,7 +416,7 @@ void time_series_prediction(Product goodsproduct[], int n, string predictent, in
 			if (sum <= pred)
 			{
 				cout << "Since you only have " << sum << " " << predictent << "(s) left in your inventory that can remain unexpired after the coming 30 days." << endl;
-				cout << "You better purchase at least " << pred - sum << " more " << predictent << "(s) with expire date at least 30 days or more, or else you'll face stock out!" << endl;
+				cout << "You better purchase at least " << pred - sum << " more " << predictent << "(s) with an expiry date that combined, can last you through the next 30 days, or else you'll face stock out!" << endl;
 			}
 			else
 			{
@@ -450,7 +450,7 @@ void time_series_prediction(Product goodsproduct[], int n, string predictent, in
 			if (sum <= pred)
 			{
 				cout << "Since you only have " << sum << " " << predictent << "(s) left in your inventory that can remain unexpired after the coming 30 days." << endl;
-				cout << "You'd better purchase at least " << pred - sum << " more " << predictent << "(s) with expire date at least 30 days or more, or else you'll face stock out!" << endl;
+				cout << "You'd better purchase at least " << pred - sum << " more " << predictent << "(s) with an expiry date that combined, can last you through the next 30 days, or else you'll face stock out!" << endl;
 			}
 			else
 			{
@@ -485,12 +485,12 @@ void time_series_prediction_disaster(Product goodsproduct[], int n, string predi
 		}
 		if (sum <= whatever)
 		{
-			cout << "Since you only have " << sum << " " << predictent << "(s) left in your inventory that can remain unexpired after the coming 30 days." << endl;
-			cout << "You'd better purchase at least " << whatever - sum << " more " << predictent << "(s) with expire date at least 30 days or more, or else you'll face stock out!" << endl;
+			cout << "Since you only have " << sum << " " << predictent << "(s) left in your inventory that can remain unexpired after the coming 30 days with the Typhoon happening." << endl;
+			cout << "You'd better purchase at least " << whatever - sum << " more " << predictent << "(s) with an expiry date that combined, can last you through the next 30 days, or else you'll face stock out!" << endl;
 		}
 		else
 		{
-			cout << "You have " << sum << " " << predictent << "(s) left in your inventory that can remain unexpired even after the coming 30 days, plenty left, there's no need to worry! " << endl;
+			cout << "You have " << sum << " " << predictent << "(s) left in your inventory that can remain unexpired even after the coming 30 days even with the Typhoon happening, plenty left, there's no need to worry! " << endl;
 		}
 		break;
 	}
@@ -516,12 +516,12 @@ void time_series_prediction_disaster(Product goodsproduct[], int n, string predi
 		cout << "It is likely that the demand of " << predictent << " will be " << pred << " in the next 30 days. " << endl;
 		if (sum <= pred)
 		{
-			cout << "Since you only have " << sum << " " << predictent << "(s) left in your inventory that can remain unexpired after the coming 30 days." << endl;
-			cout << "You'd better purchase at least " << pred - sum << " more " << predictent << "(s) with expire date at least 30 days or more, or else you'll face stock out!" << endl;
+			cout << "Since you only have " << sum << " " << predictent << "(s) left in your inventory that can remain unexpired after the coming 30 days with the Typhoon happening." << endl;
+			cout << "You'd better purchase at least " << pred - sum << " more " << predictent << "(s) with an expiry date that combined, can last you through the next 30 days, or else you'll face stock out!" << endl;
 		}
 		else
 		{
-			cout << "You have " << sum << " " << predictent << "(s) left in your inventory that can remain unexpired even after the coming 30 days, plenty left, there's no need to worry! " << endl;
+			cout << "You have " << sum << " " << predictent << "(s) left in your inventory that can remain unexpired even after the coming 30 days even with the Typhoon happening, plenty left, there's no need to worry! " << endl;
 		}
 		break;
 	}
@@ -549,12 +549,12 @@ void time_series_prediction_disaster(Product goodsproduct[], int n, string predi
 		cout << "It is likely that the demand of " << predictent << " will be " << pred << " in the next 30 days. " << endl;
 		if (sum <= pred)
 		{
-			cout << "Since you only have " << sum << " " << predictent << "(s) left in your inventory that can remain unexpired after the coming 30 days." << endl;
-			cout << "You'd better purchase at least " << pred - sum << " more " << predictent << "(s) with expire date at least 30 days or more, or else you'll face stock out!" << endl;
+			cout << "Since you only have " << sum << " " << predictent << "(s) left in your inventory that can remain unexpired after the coming 30 days with the Typhoon happening." << endl;
+			cout << "You'd better purchase at least " << pred - sum << " more " << predictent << "(s) with an expiry date that combined, can last you through the next 30 days, or else you'll face stock out!" << endl;
 		}
 		else
 		{
-			cout << "You have " << sum << " " << predictent << "(s) left in your inventory that can remain unexpired even after the coming 30 days, plenty left, there's no need to worry! " << endl;
+			cout << "You have " << sum << " " << predictent << "(s) left in your inventory that can remain unexpired even after the coming 30 days even with the Typhoon happening, plenty left, there's no need to worry! " << endl;
 		}
 		break;
 	}
@@ -584,12 +584,12 @@ void time_series_prediction_disaster(Product goodsproduct[], int n, string predi
 		cout << "It is likely that the demand of " << predictent << " will be " << pred << " in the next 30 days. " << endl;
 		if (sum <= pred)
 		{
-			cout << "Since you only have " << sum << " " << predictent << "(s) left in your inventory that can remain unexpired after the coming 30 days." << endl;
-			cout << "You'd better purchase at least " << pred - sum << " more " << predictent << "(s) with expire date at least 30 days or more, or else you'll face stock out!" << endl;
+			cout << "Since you only have " << sum << " " << predictent << "(s) left in your inventory that can remain unexpired after the coming 30 days with the Typhoon happening." << endl;
+			cout << "You'd better purchase at least " << pred - sum << " more " << predictent << "(s) with an expiry date that combined, can last you through the next 30 days, or else you'll face stock out!" << endl;
 		}
 		else
 		{
-			cout << "You have " << sum << " " << predictent << "(s) left in your inventory that can remain unexpired even after the coming 30 days, plenty left, there's no need to worry! " << endl;
+			cout << "You have " << sum << " " << predictent << "(s) left in your inventory that can remain unexpired even after the coming 30 days even with the Typhoon happening, plenty left, there's no need to worry! " << endl;
 		}
 		break;
 	}
@@ -643,12 +643,12 @@ void linear_regression_prediction(Product goodsproduct[], int n, int premonth, s
 	cout << "It is likely that the demand of " << predictent << " will be " << pred << " in the next 30 days. " << endl;
 	if (sum <= pred)
 	{
-		cout << "Since you only have " << sum << " " << predictent << "(s) left in your inventory that can remain unexpired after the coming 30 days." << endl;
-		cout << "You'd better purchase at least " << pred - sum << " more " << predictent << "(s) with expire date at least 30 days or more, or else you'll face stock out!" << endl;
+		cout << "Since you only have " << sum << " " << predictent << "(s) left in your inventory that can remain unexpired after the" << premonth << "." << endl;
+		cout << "You'd better purchase at least " << pred - sum << " more " << predictent << "(s) with an expiry date that combined, can last you through the next 30 days, or else you'll face stock out!" << endl;
 	}
 	else
 	{
-		cout << "You have " << sum << " " << predictent << "(s) left in your inventory that can remain unexpired even after the coming 30 days, plenty left, there's no need to worry! " << endl;
+		cout << "You have " << sum << " " << predictent << "(s) left in your inventory that can remain unexpired even after month " << premonth << ", plenty left, there's no need to worry! " << endl;
 	}
 	return;
 }
@@ -700,12 +700,12 @@ void linear_regression_prediction_disaster(Product goodsproduct[], int n, int pr
 	cout << "It is likely that the demand of " << predictent << " will be " << pred << " in the next 30 days. " << endl;
 	if (sum <= pred)
 	{
-		cout << "Since you only have " << sum << " " << predictent << "(s) left in your inventory that can remain unexpired after the coming 30 days." << endl;
-		cout << "You'd better purchase at least " << pred - sum << " more " << predictent << "(s) with expire date at least 30 days or more, or else you'll face stock out!" << endl;
+		cout << "Since you only have " << sum << " " << predictent << "(s) left in your inventory that can remain unexpired after the month" << premonth << " with the Typhoon happening." << endl;
+		cout << "You'd better purchase at least " << pred - sum << " more " << predictent << "(s) with an expiry date that combined, can last you through month" << premonth << ", or else you'll face stock out!" << endl;
 	}
 	else
 	{
-		cout << "You have " << sum << " " << predictent << "(s) left in your inventory that can remain unexpired even after the coming 30 days, plenty left, there's no need to worry! " << endl;
+		cout << "You have " << sum << " " << predictent << "(s) left in your inventory that can remain unexpired even after month " << premonth << " with the Typhoon happening, plenty left, there's no need to worry! " << endl;
 	}
 	return;
 }
@@ -715,7 +715,7 @@ void forecast(Product goodsproduct[], int size) // Leo
 {
 	string disaster;
 	string response, NO="NO";
-	cout << "This is a total list of your current inventory stored in the system, is there anything different from the actual inventory you'd like to update us with? (If nothing more, type NO) " << endl;
+	cout << "This is your current inventory, enter the name of a product you would like to make any changes to. (Otherwise type NO) " << endl;
 	display(goodsproduct, size);
 	cin >> response;
 	while (response != NO)
@@ -724,17 +724,17 @@ void forecast(Product goodsproduct[], int size) // Leo
 		cout << "Which batch of " << response << " you'd like to update?" << endl;
 		cin >> batch;
 		updateproduct(goodsproduct, size, response, batch);
-		cout << "Anything more?" << endl;
+		cout << "Anything more?(Type NO if none, otherwise, the product name for further changes)" << endl;
 		cin >> response;
 	}
-	cout << "Which product you would like to make prediction on? " << endl;
+	cout << "Which product would you like to make a prediction on? " << endl;
 	string predictent;
 	cin >> predictent;
 	cout << "OK, in order to make prediction on " << predictent << ", we need some more information, stick with us. " << endl;
 	cout << "There are several prediction methods for you to choose from, each with different specifications on the input parameters." << endl;
 	cout << "These methods are as follows: " << endl << endl;
 	cout << "1.Time Series (Number of months to which you have data, every individual data)" << endl;
-	cout << "2.Linear Regression methods (Number of data sets you have, every individual data set in the format of (x,y) )" << endl;
+	cout << "2.Linear Regression methods (Number of data sets you have, every individual data set in the format of (x,y))" << endl;
 	cout << "If you're not sure what they stand for, enter 4 or 5 for each one of the method's definition respectively. " << endl << endl;
 	int method;
 	cout << "Which one would you like to choose? " << endl;
@@ -744,7 +744,7 @@ void forecast(Product goodsproduct[], int size) // Leo
 		if (method == 1)
 		{
 			cout << "In time series prediction, you'll need to feed us with the following information: " << endl;
-			cout << "The number of continuous month on which you have data to, prior to this month (1, 3, 5 or 7. The greater the number is, the more accurate this prediction will likely be, in other words, the more data you have, the better. ): " << endl;
+			cout << "The number of continuous month on which you have data to, prior to this month (1, 3, 5 or 7. The greater the number is, the more accurate this prediction will likely be, in other words, the more data you have, the better.): " << endl;
 			int n;
 			cin >> n;
 			time_series_prediction(goodsproduct, n, predictent, size);
@@ -787,10 +787,10 @@ void forecastwithdisaster(Product goodsproduct[], int size) // Leo
 	cout << "What's the category of this time's " << disaster << "? (From 1 to 13)" << endl;
 	int disaster_index;
 	cin >> disaster_index;
-	cout << "How long will this time's " << disaster << " last?" << endl;
+	cout << "How many days will this time's " << disaster << " last?" << endl;
 	int length;
 	cin >> length;
-	cout << "This is a total list of your current inventory stored in the system, is there anything different from the actual inventory you'd like to update us with? (If nothing more, type NO) " << endl;
+	cout << "This is your current inventory, enter the name of a product you would like to make any changes to. (Otherwise type NO) " << endl;
 	display(goodsproduct, size);
 	cin >> response;
 	while (response != NO)
@@ -799,27 +799,24 @@ void forecastwithdisaster(Product goodsproduct[], int size) // Leo
 		cout << "Which batch of " << response << " you'd like to update?" << endl;
 		cin >> batch;
 		updateproduct(goodsproduct, size, response, batch);
-		cout << "Anything more?" << endl;
+		cout << "Anything more?(Type NO if none, otherwise, the product name for further changes)" << endl;
 		cin >> response;
 	}
-	cout << "Which product you would like to make prediction on? " << endl;
+	cout << "Which product do you think will run out during this " << disaster << "? " << endl;
 	string predictent;
 	cin >> predictent;
-	cout << "OK, in order to make prediction on " << predictent << " as to encounter the coming of " << disaster << ", we need some more information, stick with us. " << endl;
-	cout << "There are several prediction methods for you to choose from, each with different specifications on the input parameters." << endl;
-	cout << "These methods are as follows: " << endl <<endl;
+	cout << "Which prediction method would you like to employ?: " <<endl;
 	cout << "1.Time Series (Number of months to which you have data, every individual data)" << endl;
-	cout << "2.Linear Regression methods (Number of data sets you have, every individual data set in the format of (x,y) )" << endl << endl;
+	cout << "2.Linear Regression methods (Number of data sets you have, every individual data set in the format of (x,y))" << endl << endl;
 	cout << "If you're not sure what they stand for, enter 4 or 5 for each one of the method's definition respectively. " << endl;
 	int method;
-	cout << "Which one would you like to choose? " << endl;
 	cin >> method;
 	while (method != 0)
 	{
 		if (method == 1)
 		{
 			cout << "In time series prediction, you'll need to feed us with the following information: " << endl;
-			cout << "The number of continuous month on which you have data to, prior to this month (1, 3, 5 or 7. The greater the number is, the more accurate this prediction will likely be, in other words, the more data you have, the better. ): " << endl;
+			cout << "The number of continuous month on which you have data to, prior to this month (1, 3, 5 or 7): " << endl;
 			int n;
 			cin >> n;
 			time_series_prediction_disaster(goodsproduct, n, predictent, size, disaster_index, length);
@@ -831,7 +828,7 @@ void forecastwithdisaster(Product goodsproduct[], int size) // Leo
 			cout << "The number of data sets you have, in the format of (month, quantity): " << endl;
 			int n;
 			cin >> n;
-			cout << "Which month's demand would you like for us to predict?" << endl;
+			cout << "Which month will the Typhoon arrive?" << endl;
 			int premonth;
 			cin >> premonth;
 			linear_regression_prediction_disaster(goodsproduct, n, premonth, predictent, size, disaster_index, length);
@@ -895,7 +892,7 @@ void reminder(Product *array, int num_p, int &notices, char demand) // Taha
 void inventory_worth( Product goodsarray[], int size) // Leo
 {
 	string productname;
-	cout << "Which product's inventory worth would you like to know? (If you want to know how much is everything worth in the warehouse just to feel like a BOSS, type EVERYTHING)" << endl;
+	cout << "Which product's inventory worth would you like to know? (Type EVERYTHING if you want to know the total worth of your current inventory)" << endl;
 	cin >> productname;
 	cout << endl;
 	int sum = 0;
@@ -1045,6 +1042,7 @@ int main() {
       }
 	  case 7: {
 		  forecastwithdisaster(database, num_products);
+		  break;
 	  }
 	  default: {
 	  	cout << "Please choose a number between 1 & 8" << endl;
