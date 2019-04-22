@@ -257,19 +257,19 @@ void viewproduct(Product goodsarray[], int size) // Leo
 		}
 	}
 	else if (option == 2)
+	{
+		cout << "Which type of product would you like to check on?" << endl;
+		string product_type;
+		cin >> product_type;
+		cout << "So these are all the " << product_type << " products that are currently in stock." << endl;
+		for (int i = 0; i < size; i++)
 		{
-			cout << "Which type of product would you like to check on?" << endl;
-			string product_type;
-			cin >> product_type;
-			cout << "So these are all the " << product_type << " products that are currently in stock." << endl;
-			for (int i = 0; i < size; i++)
+			if (goodsarray[i].type == product_type)
 			{
-				if (goodsarray[i].type == product_type)
-				{
-					cout << goodsarray[i].name << " " << goodsarray[i].type << " " << goodsarray[i].price << " " << goodsarray[i].quantity << " " << goodsarray[i].days_left << " " << goodsarray[i].batch << endl;
-				}
+				cout << goodsarray[i].name << " " << goodsarray[i].type << " " << goodsarray[i].price << " " << goodsarray[i].quantity << " " << goodsarray[i].days_left << " " << goodsarray[i].batch << endl;
 			}
 		}
+	}
 	else if (option == 3)
 	{
 		cout << "So these are all the products in stock with prices ranging from highest to lowest." << endl;
