@@ -211,6 +211,23 @@ void sortfunction(Product goodsarray[], int option, int size)
 	display(sortedarray, size);
 }
 
+/*To determine if certain type is already in the printed array, if already in, return true, if doesn't, return false.*/
+bool findtype(string alreadyprinted[], int size, string needle)
+{
+	for (int i = 0; i < size; i++)
+	{
+		if (alreadyprinted[i] == needle)
+		{
+			return true;
+		}
+		else
+		{
+			continue;
+		}
+	}
+	return false;
+}
+
 /*The main sorting body of the rest of the unquantifiable filters in Product, and the skeleton program for view product itself, which supports the inspection of the whole data base, with filters featured.*/
 void viewproduct(Product goodsarray[], int size) // Leo
 {
@@ -258,15 +275,41 @@ void viewproduct(Product goodsarray[], int size) // Leo
 	}
 	else if (option == 2)
 	{
-		cout << "Which type of product would you like to check on?" << endl;
-		string product_type;
-		cin >> product_type;
-		cout << "So these are all the " << product_type << " products that are currently in stock." << endl;
+		string alreadyprinted[size];
+		int counter = 0;
 		for (int i = 0; i < size; i++)
 		{
-			if (goodsarray[i].type == product_type)
+			if (findtype(alreadyprinted, size, goodsarray[i].type))
 			{
-				cout << goodsarray[i].name << " " << goodsarray[i].type << " " << goodsarray[i].price << " " << goodsarray[i].quantity << " " << goodsarray[i].days_left << " " << goodsarray[i].batch << endl;
+				continue;
+			}
+			else
+			{
+				alreadyprinted[counter] = goodsarray[i].type;
+				counter += 1;
+			}
+		}
+		for (int i = 0; i <= counter; i++)
+		{
+			for (int j = 0 ; j <= counter; j++)
+			{
+				if (alreadyprinted[i] < alreadyprinted[j])
+					{
+						string temp;
+						temp = alreadyprinted[i];
+						alreadyprinted[i] = alreadyprinted[j];
+						alreadyprinted[j] = temp;
+					}
+			}
+		}
+		for (int j = 0; j <= counter; j++)
+		{
+			for (int i = 0; i < size; i++)
+			{
+				if (goodsarray[i].type == alreadyprinted[j])
+				{
+					cout << goodsarray[i].name << " " << goodsarray[i].type << " " << goodsarray[i].price << " " << goodsarray[i].quantity << " " << goodsarray[i].days_left << " " << goodsarray[i].batch << endl;
+				}
 			}
 		}
 	}
