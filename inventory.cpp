@@ -235,16 +235,23 @@ it takes the database and num of products as parameters. Then prompts the user, 
 void viewproduct(Product goodsarray[], int size) // Leo
 {
 	cout << "How would you like to view your Products?" << endl;
-	cout << "1. Specific Product" << endl;
-	cout << "2. By Type (Lexicographically)" << endl;
-	cout << "3. By Price" << endl;
-	cout << "4. By Quantity" << endl;
-	cout << "5. By Expiry days" << endl;
+	cout << "1. All Products" << endl;
+	cout << "2. Specific Product" << endl;
+	cout << "3. By Type (Lexicographically)" << endl;
+	cout << "4. By Price" << endl;
+	cout << "5. By Quantity" << endl;
+	cout << "6. By Expiry days" << endl;
 	cout << "So...which is it going to be?" << endl;
 	int option;
 	cin >> option;
 	
-	if (option == 1)
+	if(option == 1) {
+		for(int j = 0; j < size; ++j) {
+			cout << goodsarray[j].name << " " << goodsarray[j].type << " " << goodsarray[j].type << " " << goodsarray[j].price << " " << goodsarray[j].quantity;
+			cout  << " " << goodsarray[j].days_left << " " << goodsarray[j].batch << endl;
+		}
+	}
+	if (option == 2)
 	{
 		cout << "Which product would you like to check?" << endl;
 		string product_name;
@@ -274,7 +281,7 @@ void viewproduct(Product goodsarray[], int size) // Leo
 			}
 		}
 	}
-	else if (option == 2)
+	else if (option == 3)
 	{
 		string alreadyprinted[size];
 		int counter = 0;
@@ -314,17 +321,17 @@ void viewproduct(Product goodsarray[], int size) // Leo
 			}
 		}
 	}
-	else if (option == 3)
+	else if (option == 4)
 	{
 		cout << "So these are all the products in stock with prices ranging from highest to lowest." << endl;
 		sortfunction(goodsarray, 2, size);
 	}
-	else if (option == 4)
+	else if (option == 5)
 	{
 		cout << "So these are all the products in stock with quantity ranging from highest to lowest." << endl;
 		sortfunction(goodsarray, 3, size);
 	}
-	else if (option == 5)
+	else if (option == 6)
 	{
 		cout << "So these are all the products in stock with their days left before expiry, from the Most to Least Number of Days." << endl;
 		sortfunction(goodsarray, 4, size);
@@ -930,7 +937,7 @@ void inventory_worth( Product goodsarray[], int size) // Leo
 /*This function will load the database from the database file when the program is run
 it takes a pointer to the aray, as well as size of the array and the number of products in it currently
 it will then insert these products into the array for further processing by the program*/
-void load_array(Product *array, int sizeofarray, int &num_products) // Taha
+void load_array(Product *&array, int &sizeofarray, int &num_products) // Taha
 {
 	cout << "Please wait a moment while the program is loading ";
 	int repeat = 0;
@@ -960,7 +967,7 @@ void load_array(Product *array, int sizeofarray, int &num_products) // Taha
 	    if(idx == sizeofarray) {  //incase our product number reaches max size of the array, then increase the size of array
 	    	increase_size(array, sizeofarray);
 	    }
-	    ss.clear();  //tdont forget to clear the stream
+	    ss.clear();  //dont forget to clear the stream
 	    ss.str(lineofdata);
 		ss >> array[idx].name;
 		ss >> array[idx].type;
@@ -1003,8 +1010,8 @@ void write_array(Product *save_myarray, int total_products) {
 }
 
 int main() {
-  int choice, size = 10, num_products = 0, notices = 0;
-  Product database[10]; //struct array to store all our products
+  int choice, size = 10, num_products = 0, notices = 0;  //initial size of array will be 10
+  Product *database = new Product[10]; //struct array to store all our products
   load_array(database, size, num_products);  //initializing program from last saved version
   reminder(database, num_products, notices, 'I');  //I argument so we only get the number of notices, the reminders wont be posted
   choice = menu(notices);
