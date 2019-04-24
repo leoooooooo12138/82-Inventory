@@ -38,7 +38,11 @@ If there are no reminders, an output message will be displayed stating as such.
 3. Update existing Product: It lets you update any of the existing products. It asks for which product to update and the batch number in order to locate the specific product.
 In case the product does not exist then an output message will be displayed, otherwise it will prompt the user for the new price, quantity, and expiry date to update the product.
 
-4. View Products: You can check the specific information on products, such as Searching for specific products or inspecting the whole database using filters such as sorting by type, price, quantity, expiry, etc.
+4. View Products: You can check the specific information on products, such as Searching for specific products or inspecting the whole database using filters such as sorting by type, price, quantity, days left till expire.
+By type will list out all the inventory, sorted by type in a lexicographically.
+By price will list out all the inventory, sorted by price, printed out from biggest to smallest.
+By quantity will list out all the inventory, sorted by quantity, printed out from biggest to smallest.
+By days left will list out all the inventory, sorted by how many days will it have till expire, from the biggest to smallest.
 
 5. Inventory checking and predicting: The system will Make predictions of demand and compare with existing stock levels to check for shortages. This option will show the entire current database and 
 give the user a choice to change any of the existing products as deemed necessary before the system makes predictions. Since the system requires some previous data in order to make the predictions
@@ -46,10 +50,11 @@ it will ask the user which prediction mechanism to use as well as explain what t
 and may check the definition of the two methods incase of further clarification (press 4 or 5 when the program asks). For linear time series prediction the numbers of months need to be provided which the user has data for, the the relevant demands in those months.
 For linear regression, for each data entry two data points are needed i.e Month number and demand and then the system can predict for the demand for a particualar month as specified by the user
 Incase the products of that type expire before the end of the month, or there are less suitable units available then the demand, the user will be told.
+For now, due to the restrictions of method implemented in the prediction process, we can only predict demands month by month, which means all the perishables can't be predicted.
 
-6. Inventory worth: You can check how much worth of products are in the inventory. This can be done either by a particular product name, or by typing EVERYTHING, the entire worth of the inventory can be gauged.
+6. Inventory worth: You can check how much worth of products are in the inventory. This can be done either by a particular product name, which gives you how much is every particular product's worthing, or by typing EVERYTHING, the entire worth of the inventory can be gauged.
 
-7. Inventory checking and predicting in events of natural disaster: An inventory prediction system taken into consideration the natural disaster situation, ask for some indexes to make more accurate prediction for the user.
+7. Inventory checking and predicting in events of natural disaster: An inventory prediction system taken into consideration the natural disaster situation, ask for some indexes to make more accurate prediction for the user. The main prediction body and method used are mostly the same as in function 5, but will be more accurate to the disaster situation.
 
 8. Quit: The updated database will be stored into the file and the program will end.
 

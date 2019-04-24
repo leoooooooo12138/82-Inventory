@@ -743,6 +743,7 @@ void forecast(Product goodsproduct[], int size) // Leo
 	cout << "1.Time Series (Number of months for which you have data)" << endl;
 	cout << "2.Linear Regression Method (Number of data sets you have, i.e every individual data set in the format of (x,y))" << endl;
 	cout << "If you're not sure what they stand for, enter 4 or 5 for each one of the method's definition respectively. " << endl << endl;
+	cout << "PS: Please do not try to predict the perishables as we can only predict demand month by month, sorry for the inconvenience caused." << endl;
 	int method;
 	cout << "Which one would you like to choose? " << endl;
 	cin >> method;
@@ -816,6 +817,7 @@ void forecastwithdisaster(Product goodsproduct[], int size) // Leo
 	cout << "1.Time Series (Number of months for which you have data)" << endl;
 	cout << "2.Linear Regression Method (Number of data sets you have, i.e every individual data set in the format of (x,y))" << endl;
 	cout << "If you're not sure what they stand for, enter 4 or 5 for each one of the method's definition respectively. " << endl;
+	cout << "PS: Please do not try to predict the perishables as we can only predict demand month by month, sorry for the inconvenience caused." << endl;
 	int method;
 	cin >> method;
 	while (method != 0)
