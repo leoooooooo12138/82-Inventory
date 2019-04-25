@@ -708,7 +708,7 @@ void linear_regression_prediction_disaster(Product goodsproduct[], int n, int pr
 	if (sum <= pred)
 	{
 		cout << "Since you only have " << sum << " " << predictent << "(s) in your inventory at the moment." << endl;
-		cout << "You'd better purchase at least " << pred - sum << " more " << predictent << "(s) with an expiry date that combined, can last you through the specified month, or else you'll face stock out!" << endl;
+		cout << "You'd better purchase at least " << pred - sum << " more " << predictent << "(s) with an expiry date that combined, can last you through the specified month even with Typhoon happening, or else you'll face stock out!" << endl;
 	}
 	else
 	{
@@ -813,8 +813,8 @@ void forecastwithdisaster(Product goodsproduct[], int size) // Leo
 	string predictent;
 	cin >> predictent;
 	cout << "Which prediction method would you like to employ?: " <<endl;
-	cout << "1.Time Series (Number of months for which you have data)" << endl;
-	cout << "2.Linear Regression Method (Number of data sets you have, i.e every individual data set in the format of (x,y))" << endl;
+	cout << "1.Time Series" << endl;
+	cout << "2.Linear Regression Method" << endl;
 	cout << "If you're not sure what they stand for, enter 4 or 5 for each one of the method's definition respectively. " << endl;
 	int method;
 	cin >> method;
