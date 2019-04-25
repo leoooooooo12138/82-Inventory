@@ -4,6 +4,8 @@ The "Windows Inventory 82" contains almost the same coding content in one sigula
 
 It is advised for you to run the .exe file under the windows version directly. Both version has the same content.
 
+Problem Statement: This is an Inventory management system to help small stores manage their inventory. It gives useful reminders which makes managing inventory easier; gives forecast under both normal circumstances and special events like Typhoon which is often the case in Hong Kong. It also makes viewing product easier by sorting them.
+
 The data is stored in an output file called "Database.txt"
 Each time the program runs, this data is loaded, and when the program ends, the updated data is overwritten
 Incase the program fails to load the file, an error message will be shown as well as if it fails to write it before ending the program
