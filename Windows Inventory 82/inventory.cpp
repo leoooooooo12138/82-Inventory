@@ -13,11 +13,6 @@ using namespace std;
 
 
 
-std::string to_string(int i) {
-	stringstream ss;
-	ss << i;
-	return ss.str();
-}
 /*this function takes an int argument which is the number of different reminders
 if the reminders are 0, then it simply displays the menu
 otherwise it will also display that there are n number of reminders the user should address.
@@ -902,7 +897,7 @@ void inventory_worth( Product goodsarray[], int size) // Leo
 	cout << "Which product's inventory worth would you like to know? (Type EVERYTHING if you want to know the total worth of your current inventory)" << endl;
 	cin >> productname;
 	cout << endl;
-	int sum = 0;
+	double sum = 0;
 	if (productname == "EVERYTHING")
 	{
 		for (int i = 0; i < size; i++)
