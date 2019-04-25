@@ -11,4 +11,3 @@ Footballs Sports 200 3000 700 F3
 Net Outdoor 500 4000 2000 L
 Footballs Sports 300 4000 2000 K
 Vitamins Supplement 200 2000 250 V3
-Tobacco Drugs 40 30000 200 T3
