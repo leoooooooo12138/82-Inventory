@@ -20,7 +20,7 @@ std::string to_string(int i) {
 }
 /*this function takes an int argument which is the number of different reminders
 if the reminders are 0, then it simply displays the menu
-otherwise it will also display that there are n number of relinearminders
+otherwise it will also display that there are n number of reminders the user should address.
 the input of this function is the action that the user will choose to do
 the function returns the int that specifies what action the user wants to do*/
 int menu(int reminders) { // Taha
@@ -144,7 +144,7 @@ void updateproduct(Product goodsarray[], int size, string updateproduct, string 
 	cout << "\nProduct Updated Successfully! ^_^ " << endl;
 }
 
-/* This function takes in the database and its size, to print out the contents */
+/*This function takes in the database and its size, then print out the entire inventory*/
 void display(Product goodsproduct[], int size) // Leo
 {
 	for (int i = 0; i < size; i++)
