@@ -882,7 +882,7 @@ void reminder(Product *array, int num_p, int &notices, char demand) // Taha
 	//checking excess inventory
 	for(int j = 0; j < num_p; ++j) {
 		if(array[j].quantity > 10000) {
-			output += "--> " + std::string("There are ") + to_string((array[j].quantity)) + " units of unsold " + array[j].name + " of Batch " + array[j].batch + ".\n";
+			output = output +  "--> " + "There are " + to_string((array[j].quantity)) + " units of unsold " + array[j].name + " of Batch " + array[j].batch + ".\n";
 			++notices;
 		}
 	}
