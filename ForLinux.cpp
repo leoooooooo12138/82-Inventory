@@ -4,7 +4,6 @@
 #include <sstream>
 #include <fstream>
 #include <limits>
-#include <windows.h>
 #include <stdio.h>
 #include <math.h>
 #include <algorithm>
@@ -25,7 +24,6 @@ the input of this function is the action that the user will choose to do
 the function returns the int that specifies what action the user wants to do*/
 int menu(int reminders) { // Taha
   int action;
-  Sleep(350);
   cout << endl;
   if(reminders != 0) {
   	if(reminders == 1) {
@@ -95,13 +93,6 @@ void addproduct( Product goodsarray[], int &size, int &size_of_array) // Leo
 	cin >> goodsarray[size].days_left;
 	cout << "Please enter the batch number for this batch of " << goodsarray[size].name << ": " << endl;
 	cin >> goodsarray[size].batch;
-	cout << "\nPlease hang on a minute " << goodsarray[size].name << " is being added";
-	int repeat = 0;
-	while (repeat != 5) {
-		Sleep(350);
-		cout << ".";
-		repeat++;
-	}
 	cout << "\nProduct added Successfully! ^_^ " << endl;
 	size += 1;
 	return;
@@ -134,13 +125,6 @@ void updateproduct(Product goodsarray[], int size, string updateproduct, string 
 	cout << "\nEnter the new Expiry date: ";
 	cin >> goodsarray[loc].days_left;
 	
-	cout << "\nPlease hang on a minute " << goodsarray[loc].name << " is being Updated";
-	int repeat = 0;
-	while (repeat != 5){
-		Sleep(350);
-		cout << ".";
-		repeat++;
-	}
 	cout << "\nProduct Updated Successfully! ^_^ " << endl;
 }
 
@@ -942,7 +926,6 @@ void load_array(Product *&array, int &sizeofarray, int &num_products) // Taha
 	cout << "Please wait a moment while the program is loading ";
 	int repeat = 0;
 	while (repeat != 4){
-		Sleep(350);
 		cout << ".";
 		repeat++;
 	}
@@ -958,7 +941,6 @@ void load_array(Product *&array, int &sizeofarray, int &num_products) // Taha
 	}
 	repeat = 0;
 	while(repeat !=3) {
-		Sleep(300);
 		cout << "." << endl;
 		repeat++;
 	}
