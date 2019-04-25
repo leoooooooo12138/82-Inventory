@@ -39,7 +39,7 @@ If there are no reminders, an output message will be displayed stating as such.
 In case the product does not exist then an output message will be displayed, otherwise it will prompt the user for the new price, quantity, and expiry date to update the product.
 
 4. View Products: You can check the specific information on products, such as Searching for specific products or inspecting the whole database using filters such as sorting by type, price, quantity, days left till expire.
-By type will list out all the inventory, sorted by type in a lexicographically.
+By type will list out all the inventory, sorted by type in a lexicographically(Items with the same type will be sorted according to the order by which they're added into the database).
 By price will list out all the inventory, sorted by price, printed out from biggest to smallest.
 By quantity will list out all the inventory, sorted by quantity, printed out from biggest to smallest.
 By days left will list out all the inventory, sorted by how many days will it have till expire, from the biggest to smallest.
