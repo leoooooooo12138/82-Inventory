@@ -642,20 +642,20 @@ void linear_regression_prediction(Product goodsproduct[], int n, int premonth, s
 	int sum = 0;
 	for (int i = 0; i < size; i++)
 	{
-		if (goodsproduct[i].name == predictent && goodsproduct[i].days_left >= 30)
+		if (goodsproduct[i].name == predictent)
 		{
 			sum += goodsproduct[i].quantity;
 		}
 	}
-	cout << "It is likely that the demand of " << predictent << " will be " << pred << " in the next 30 days. " << endl;
+	cout << "It is likely that the demand of " << predictent << " will be " << pred << " in the month you specified. " << endl;
 	if (sum <= pred)
 	{
-		cout << "Since you only have " << sum << " " << predictent << "(s) left in your inventory that can remain unexpired after the " << premonth << " month." << endl;
-		cout << "You'd better purchase at least " << pred - sum << " more " << predictent << "(s) with an expiry date that combined, can last you through the next 30 days, or else you'll face stock out!" << endl;
+		cout << "Since you only have " << sum << " " << predictent << "(s) in your inventory at the moment." << endl;
+		cout << "You'd better purchase at least " << pred - sum << " more " << predictent << "(s) with an expiry date that combined, can last you through the specified month, or else you'll face stock out!" << endl;
 	}
 	else
 	{
-		cout << "You have " << sum << " " << predictent << "(s) left in your inventory that can remain unexpired even after month " << premonth << ", plenty left, there's no need to worry! " << endl;
+		cout << "You have " << sum << " " << predictent << "(s) in your inventory, there's no need to worry! " << endl;
 	}
 	return;
 }
@@ -699,20 +699,20 @@ void linear_regression_prediction_disaster(Product goodsproduct[], int n, int pr
 	int sum = 0;
 	for (int i = 0; i < size; i++)
 	{
-		if (goodsproduct[i].name == predictent && goodsproduct[i].days_left >= 30)
+		if (goodsproduct[i].name == predictent)
 		{
 			sum += goodsproduct[i].quantity;
 		}
 	}
-	cout << "It is likely that the demand of " << predictent << " will be " << pred << " in the next 30 days. " << endl;
+	cout << "It is likely that the demand of " << predictent << " will be " << pred << " in the month you specified. " << endl;
 	if (sum <= pred)
 	{
-		cout << "Since you only have " << sum << " " << predictent << "(s) left in your inventory that can remain unexpired after the month" << premonth << " with the Typhoon happening." << endl;
-		cout << "You'd better purchase at least " << pred - sum << " more " << predictent << "(s) with an expiry date that combined, can last you through month" << premonth << ", or else you'll face stock out!" << endl;
+		cout << "Since you only have " << sum << " " << predictent << "(s) in your inventory at the moment." << endl;
+		cout << "You'd better purchase at least " << pred - sum << " more " << predictent << "(s) with an expiry date that combined, can last you through the specified month, or else you'll face stock out!" << endl;
 	}
 	else
 	{
-		cout << "You have " << sum << " " << predictent << "(s) left in your inventory that can remain unexpired even after month " << premonth << " with the Typhoon happening, plenty left, there's no need to worry! " << endl;
+		cout << "You have " << sum << " " << predictent << "(s) in your inventory, there's no need to worry! " << endl;
 	}
 	return;
 }
@@ -743,7 +743,6 @@ void forecast(Product goodsproduct[], int size) // Leo
 	cout << "1.Time Series (Number of months for which you have data)" << endl;
 	cout << "2.Linear Regression Method (Number of data sets you have, i.e every individual data set in the format of (x,y))" << endl;
 	cout << "If you're not sure what they stand for, enter 4 or 5 for each one of the method's definition respectively. " << endl << endl;
-	cout << "PS: Please do not try to predict the perishables as we can only predict demand month by month, sorry for the inconvenience caused." << endl;
 	int method;
 	cout << "Which one would you like to choose? " << endl;
 	cin >> method;
@@ -817,7 +816,6 @@ void forecastwithdisaster(Product goodsproduct[], int size) // Leo
 	cout << "1.Time Series (Number of months for which you have data)" << endl;
 	cout << "2.Linear Regression Method (Number of data sets you have, i.e every individual data set in the format of (x,y))" << endl;
 	cout << "If you're not sure what they stand for, enter 4 or 5 for each one of the method's definition respectively. " << endl;
-	cout << "PS: Please do not try to predict the perishables as we can only predict demand month by month, sorry for the inconvenience caused." << endl;
 	int method;
 	cin >> method;
 	while (method != 0)
