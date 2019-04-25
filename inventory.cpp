@@ -97,7 +97,7 @@ void addproduct( Product goodsarray[], int &size, int &size_of_array) // Leo
 	cin >> goodsarray[size].batch;
 	cout << "\nPlease hang on a minute " << goodsarray[size].name << " is being added";
 	int repeat = 0;
-	while (repeat != 6) {
+	while (repeat != 5) {
 		Sleep(350);
 		cout << ".";
 		repeat++;
@@ -247,7 +247,7 @@ void viewproduct(Product goodsarray[], int size) // Leo
 	
 	if(option == 1) {
 		for(int j = 0; j < size; ++j) {
-			cout << goodsarray[j].name << " " << goodsarray[j].type << " " << goodsarray[j].type << " " << goodsarray[j].price << " " << goodsarray[j].quantity;
+			cout << goodsarray[j].name << " " << goodsarray[j].type << " " << goodsarray[j].price << " " << goodsarray[j].quantity;
 			cout  << " " << goodsarray[j].days_left << " " << goodsarray[j].batch << endl;
 		}
 	}
